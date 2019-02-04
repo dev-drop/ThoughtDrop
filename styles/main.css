@@ -1,0 +1,69 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25em;
+    color: #7a7a7a;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Raleway', sans-serif;
+}
+
+/*-------------------------------------------------------NAV-----------------------------------------------------*/
+.navbar{
+    transition: 0.4s;
+}
+
+.navbar-brand{
+    font-size: 1.8rem;
+    margin-right: 0!important;
+    transition: 0.4s;
+}
+
+.navbar-nav{
+    font-size: 1.2em;
+    transition: 0.4s;
+}
+
+
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: transparent;
+
+}
+
+/*-------------------------------------------------------HERO IMG-----------------------------------------------------*/
+.bgimage {
+    width:100%;
+    height:500px;
+    background: url('../images/hero.png');
+    background-repeat: no-repeat;
+    background-size:cover;
+    margin-top:68px;
+    z-index: 0;
+}
+
+.hero-text {
+    text-align: center;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+/*-------------------------------------------------------NEWS FEED-----------------------------------------------------*/
+.newsfeed{
+  z-index: 1;
+  min-height: 5000px;
+  width: 100%;
+  background: url('../images/background.jpg');
+  height: auto;
+  margin-top: -250px;
+}
+
+.filter{
+  height: auto;
+  width: 100%;
+  background-color: rgba(204, 255, 255, 0.5);
+  z-index: 2;
+  margin: 0;
+}
