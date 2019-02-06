@@ -1,0 +1,8 @@
+** This folder will contain all the backend functions for the platform. 
+** Also contains the SQL file for the database IMPORT. All the foreign keys are set, confirm they transferred with the import
+
+Login/Register is completed.
+  It includes.. Registering a new User with encryption, New user validation, Login with encryption and Validation.
+
+....Up next is Posts. Posting will include, New posts, update posts, Delete posts, Like counts, and Comments
+
