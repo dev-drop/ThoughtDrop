@@ -1,3 +1,7 @@
+<?php require 'Includes/db.php'; require 'Includes/login.php'; ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,19 +30,19 @@
       </div>
 
       <!-- Login Form -->
-      <form class="loginform" action="#" method="POST">
-        <input type="text" name="username" placeholder="Username">
+      <form class="loginform" action="" method="POST">
+        <input type="text" name="employee_Id" placeholder="Employee ID">
         <input type="text" name="password" placeholder="Password">
-        <input type="submit" value="Log In">
+        <input type="submit" name="login" value="Log In">
       </form>
 
 
       <!-- Registration Form -->
-      <form class="registrationform" action="#" method="POST">
-        <input type="text" name="id" placeholder="Enter Your Employee ID">
-        <input type="text" name="name" placeholder="Enter Your User Name">
+      <form class="registrationform" action="" method="POST">
+        <input type="text" name="employee_Id" placeholder="Enter Your Employee ID">
+        <input type="text" name="display_name" placeholder="Enter Your User Name">
         <input type="text" name="password" placeholder="Enter Your Password">
-        <input type="submit" value="Register">
+        <input type="submit" name="register" value="Register">
       </form>
 
       <!-- Footer with links -->
