@@ -1,5 +1,9 @@
 <?php
 require "db.php";
+//**** INITIATE SESSION FOR USER *****
+session_name('TDSession');
+session_start();
+
 
 //**** REGISTRATION *****
 if(isset($_POST['register'])){
@@ -58,7 +62,8 @@ if(isset($_POST['login'])){
         $passVerified = password_verify($password, $HashPass);
         if($passVerified){
             //TO:DO SOMETHING HERE WHEN VERIFIED
-            echo "Login Successful";
+            echo "Login Successful";          
+            $_SESSION['currentUser'] = $result['employee_Id'];
         }else{
             //TO:DO SOMETHIING HERE WHEN PASSWORD IS INCORRECT
             echo "Password incorrect";
@@ -67,6 +72,15 @@ if(isset($_POST['login'])){
         //TO:DO SOMETHING HERE WHEN USER DOESN' EXIST
         echo "Sorry, User Not Found";
     }
+}
+
+//**** LOG OUT ****
+if(isset($_POST['logout'])){
+    
+    //TODO : LOGOUT FUNCTION
+    Unset($_SESSION['currentUser']);
+    header("Location: http://localhost:8888/WAD3PHPLabs/ThoughtDrop/");
+  
 }
 
 ?>

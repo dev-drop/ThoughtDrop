@@ -22,4 +22,7 @@ $options =
 
 //**** INSTANTIATE A NEW PDO (PHP DATA OBJECT) ****
 $pdo = new PDO($dsn, $username, $password, $options);
+
+
+//COOKIE SUPERGLOBAL $_SESSION['']
 ?>
