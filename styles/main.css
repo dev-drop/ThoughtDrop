@@ -36,6 +36,10 @@ h1, h2, h3, h4, h5, h6{
 
 }
 
+#searchimg{
+  width: 25px;
+}
+
 /*-------------------------------------------------------HERO IMG-----------------------------------------------------*/
 .bgimage {
     width:100%;
@@ -205,19 +209,27 @@ input[type=text]:placeholder {
   z-index: 1;
   min-height: 5000px;
   width: 100%;
-  background: url('../images/background.jpg') ceter;
+  background: url('../images/background.jpg') center;
   height: auto;
   margin: 0 auto;
 }
 
-.filter{
-  height: auto;
-  width: 100%;
-  background-color: rgba(204, 255, 255, 0.5);
-  z-index: 2;
-  margin: 0;
-}
-.card{
-  width: 100%;
+.profile-body{
   margin: 0 auto;
+  float:right;
+}
+
+.profile-img{
+  width: 150px;
+  height:150px;
+  background-color: white;
+}
+
+.profile-img>img{
+  width: 150px;
+  border-radius: 50%;
+}
+
+.card{
+  margin-bottom:50px;
 }

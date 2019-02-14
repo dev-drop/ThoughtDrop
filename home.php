@@ -26,7 +26,13 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="nav-pills navbar-nav" id="navbar-navv">
             <li class="nav-item">
-                <a class="nav-link" href="#skills">Search</a>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-light btn-sm" type="button" id="button-addon2"><img id="searchimg" src="images/search.png"/></button>
+                </div>
+              </div>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#about">Login</a>
@@ -48,15 +54,86 @@
 <!---  Feed    ----------------------------------------------------------------->
 
 <div class="newsfeed container-fluid">
-  <div class="container">
-    <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Username</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-      </div>
+<div class="row">
+  <div class="profile-container col">
+    <div class="profile-body">
+      <div class="profile-img"><img src="images/LindainAdmin.jpg" alt="ProfileImg"></div>
+      <h4>Display Name<h4>
+      <p>Department</p>
+    </div>
   </div>
+
+  <div class="col-8">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="rd-tab" data-toggle="tab" href="#rd" role="tab" aria-controls="rd" aria-selected="false">R&D</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="ms-tab" data-toggle="tab" href="#ms" role="tab" aria-controls="ms" aria-selected="false">M&S</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <!--ALL TAB CONTENT----------------------------------------------->
+          <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Username</h5>
+                <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE ALL TAB</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <!--ALL TAB CONTENT----------------------------------------------->
+          <div class="tab-pane fade" id="rd" role="tabpanel" aria-labelledby="rd-tab">
+            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Username</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE RD TAB</h6>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--ALL TAB CONTENT----------------------------------------------->
+          <div class="tab-pane fade" id="ms" role="tabpanel" aria-labelledby="ms-tab">
+            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Username</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE MS TAB</h6>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--ALL TAB CONTENT----------------------------------------------->
+          <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Username</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE ADMIN TAB</h6>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+
+  <div class="col">
+  </div>
+</div>
 </div>
 
 
