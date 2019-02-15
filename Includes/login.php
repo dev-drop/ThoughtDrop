@@ -7,29 +7,31 @@ session_start();
 
 //**** REGISTRATION *****
 if(isset($_POST['register'])){
-    
+
     //FORM INPUT FIELDS
     $employee_Id = $_POST['employee_Id'];
     $display_name = $_POST['display_name'];
     $password = $_POST['password'];
-    
+
     //HASH PASSWORD
-    $options = ['cost' =>12];    
+    $options = ['cost' =>12];
     $hashedPass = password_hash($password, PASSWORD_BCRYPT, $options);
-    
+
     //CHECK FOR EXISTING USER
     if(!userExists($employee_Id, $pdo)){
         //PREARE & EXECUTE SQL REGISTER USER DATA
         $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`) VALUES (?, ?, ?)');
         $statement->execute([$employee_Id, $display_name, $hashedPass]);
+        header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
+        exit();
     }else{
-        Echo "Sorry, There is already a user by that Name";
+        //Echo "Sorry, There is already a user by that Name";
     }
 }
 
 //**** NEW ID VALIDATION ****
 function userExists($employee_Id, $pdo){
-    
+
     //SEARCH EMPLOYEE TABLE FOR THE REGISTERING ID
     $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
     $statement->execute([$employee_Id]);
@@ -38,23 +40,23 @@ function userExists($employee_Id, $pdo){
         return true;
     }else{
         return false;
-    }    
+    }
 }
 
 //**** LOGIN VERIFICATION ****
 if(isset($_POST['login'])){
-    
+
     //FORM INPUT FIELDS
     $employee_Id = $_POST['employee_Id'];
     $password = $_POST['password'];
-    
+
     //SEARCH FOR ID AND PASSWORD MATCH (ID IS UNIQUE TO USER)
     $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
     $statement->execute([$employee_Id]);
     $result = $statement->fetch();
     //var_dump($result);
     if($result){
-    
+
         //STORE USERS PASSWORD
         $HashPass = $result['password'];
 
@@ -62,25 +64,24 @@ if(isset($_POST['login'])){
         $passVerified = password_verify($password, $HashPass);
         if($passVerified){
             //TO:DO SOMETHING HERE WHEN VERIFIED
-            echo "Login Successful";          
             $_SESSION['currentUser'] = $result['employee_Id'];
+            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
+            exit();
         }else{
-            //TO:DO SOMETHIING HERE WHEN PASSWORD IS INCORRECT
-            echo "Password incorrect";
+            //echo "Password incorrect";
         }
     }else{
-        //TO:DO SOMETHING HERE WHEN USER DOESN' EXIST
-        echo "Sorry, User Not Found";
+        //echo "Sorry, User Not Found";
     }
 }
 
 //**** LOG OUT ****
 if(isset($_POST['logout'])){
-    
+
     //TODO : LOGOUT FUNCTION
     Unset($_SESSION['currentUser']);
-    header("Location: http://localhost:8888/WAD3PHPLabs/ThoughtDrop/");
-  
+    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/");
+    exit();
 }
 
 ?>
