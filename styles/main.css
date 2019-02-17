@@ -39,6 +39,13 @@ h1, h2, h3, h4, h5, h6{
 #searchimg{
   width: 25px;
 }
+.btn-outline-light{
+  border-color: transparent;
+}
+
+#searchbar{
+  display: none;
+}
 
 /*-------------------------------------------------------HERO IMG-----------------------------------------------------*/
 .bgimage {
@@ -205,6 +212,26 @@ input[type=text]:placeholder {
 
 
 /*-------------------------------------------------------NEWS FEED-----------------------------------------------------*/
+.statusTA::placeholder {
+  font-style: italic;
+  font-size: 0.875rem;
+}
+.statusTA{
+  border-color: aliceblue;
+  resize: none;
+  overflow: hidden;
+  min-height: 50px;
+  max-height: 100px;
+}
+
+
+#the-count {
+  float: right;
+  padding: 0.1rem 0 0 0;
+  font-size: 0.875rem;
+}
+
+
 .newsfeed{
   z-index: 1;
   min-height: 5000px;
@@ -230,6 +257,60 @@ input[type=text]:placeholder {
   border-radius: 50%;
 }
 
+a{
+   color: darkgrey;
+}
+.nav-tabs .nav-link{
+  background-color: #f5f5f5;
+  border: none;
+  color: #1e2421;
+}
+
+.nav-tabs .nav-link:hover{
+  color: #1e2421;
+}
+
+
 .card{
   margin-bottom:50px;
+  border: 2px solid;
+}
+
+#all-tab{
+  background-color: #f5f5f5;
+  opacity: .75;
+}
+
+.all{
+    border-color: #f5f5f5;
+}
+
+#rd-tab{
+  background-color: #a7d1c0;
+  opacity: .75;
+}
+
+.rd{
+  border-color: #a7d1c0;
+}
+
+#ms-tab{
+  background-color: #ffcc61;
+  opacity: .75;
+}
+
+.ms{
+  border-color: #ffcc61;
+}
+
+#admin-tab{
+  background-color: #c5a8d0;
+  opacity: .75;
+}
+.admin{
+  border-color: #c5a8d0;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+  opacity: 1!important;
 }
