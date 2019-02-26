@@ -72,8 +72,15 @@ $(function() {
 
 });
 
-
 function auto_grow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight)+"px";
 }
+
+//*** PASS EDIT VALUES TO MODEL ***
+$(document).on("click", ".editModal", function () {
+    var editId = $(this).data('id');
+    var editBody = $(this).data('val');
+    $(".modal-body #editId").val( editId );
+    $(".modal-body #editBody").val( editBody );
+});

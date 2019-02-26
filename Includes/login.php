@@ -22,8 +22,9 @@ if(isset($_POST['register'])){
         //PREARE & EXECUTE SQL REGISTER USER DATA
         $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`) VALUES (?, ?, ?)');
         $statement->execute([$employee_Id, $display_name, $hashedPass]);
+        $_SESSION['currentUser'] = $employee_Id;
         header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
-        exit();
+        //exit();
     }else{
         //Echo "Sorry, There is already a user by that Name";
     }

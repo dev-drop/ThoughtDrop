@@ -1,5 +1,5 @@
 <?php
-require 'Includes/db.php'; require 'Includes/login.php';
+require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php';
 if (! empty($_SESSION['currentUser']))
 {
 ?>
@@ -19,12 +19,32 @@ if (! empty($_SESSION['currentUser']))
 
 </head>
 <body id="bod" data-spy="scroll" data-target=".navbar-light" data-offset="300">
-
+<!-- EDIT MODAL -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Post</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- EDIT FORM -->
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" id="editId" name="postId" value="" />
+                        <input type="text" id="editBody" name="body" value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info btn-lg" name="edit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 <!--Navigation bar-->
 <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" id="nav-brand" href="#">CompanyXYZ</a><br>
+    <a class="navbar-brand" id="nav-brand" href="#">Company<span style="color:Red">XYZ</span></a><br>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,9 +60,11 @@ if (! empty($_SESSION['currentUser']))
               </div>
 
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/Includes/logout.php">Logout</a>
-            </li>
+            <form action="" method="post">
+                <li class="nav-item">
+                    <button type="submit" name="logout">Logout</button>
+                </li>
+            </form>
         </ul>
     </div>
 </nav>
@@ -58,25 +80,44 @@ if (! empty($_SESSION['currentUser']))
 
 
 <!---  Feed    ----------------------------------------------------------------->
+<!-- USER PROFILE -->
+<?php 
+    //*** FETCH USER INFO ***
+    $userInfo = userProf($pdo);
+    
+    //*** FETCH ALL POSTS ***
+    $posts = init($pdo);
+    
+    //*** SAVE VALUES FROM SUPERGLOBALS ***
+    $employee_id = $userInfo['employee_Id'];
+    $display_name = $userInfo['display_name'];
+    $userThumb = $userInfo['thumbnail'];   
+?>
 
 <div class="newsfeed container-fluid">
 <div class="row">
   <div class="profile-container col">
     <div class="profile-body">
-      <div class="profile-img"><img src="images/LindainAdmin.jpg"></div>
-      <h4>Display Name<h4>
-      <p>Department</p>
+      <div class="profile-img"><img src="images/LindainAdmin.jpg" alt="ProfileImg"></div>
+        <h2><?php echo $display_name ?></h2>
+        <h3><?php echo $employee_id ?></h3>
+
     </div>
   </div>
 
   <div class="col-8">
-    <div class="form-group">
-      <textarea placeholder="Drop Your Thoughts" class="form-control statusTA" id="exampleFormControlTextarea3" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
-      <div id="the-count">
-        <span id="current">0</span>
-        <span id="maximum">/ 300</span>
-      </div>
-    </div>
+  <!-- NEW POST FORM -->
+   <form action="" method="post">
+        <div class="form-group">
+          <textarea placeholder="Drop Your Thoughts" class="form-control statusTA" id="exampleFormControlTextarea3" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
+          <button type="submit" class="btn btn-info btn-lg" name="postContent">Post</button>
+          <div id="the-count">
+            <span id="current">0</span>
+            <span id="maximum">/ 300</span>
+          </div>
+        </div>
+    </form>
+    <!------------------>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item tab">
             <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
@@ -93,15 +134,37 @@ if (! empty($_SESSION['currentUser']))
         </ul>
         <div class="tab-content" id="myTabContent">
           <!--ALL TAB CONTENT----------------------------------------------->
+          <?php
+            $rows = allPosts($pdo);
+            foreach ($rows as $row)
+            {
+          ?>
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <div class="card all">
+            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Username</h5>
-                <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE ALL TAB</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title"><?php echo $row['timestamp']." "; echo $row['author_Id']; ?></h5>
+                <p class="card-text"><?php echo $row['body']; ?></p>
               </div>
+              <?php
+                //VALIDATE USER FOR ADMIN PERMISSIONS
+                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']); 
+                if($adminOptions){
+                ?>
+              <div class="adminOpt">                                  
+                  <!-- OPEN EDIT MODAL WINDOW -->
+                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>                      
+                  <!-- DELETE POST FORM -->
+                  <form action="" class="deleteForm" method="post">
+                        <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
+                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button> 
+                  </form>
+              </div>
+              <?php } ?>   
             </div>
           </div>
+          <?php
+            }
+          ?>
           <!--RD TAB CONTENT----------------------------------------------->
           <div class="tab-pane fade" id="rd" role="tabpanel" aria-labelledby="rd-tab">
             <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
@@ -153,9 +216,7 @@ if (! empty($_SESSION['currentUser']))
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
-<?php
-}else
-{
-    echo 'You are not logged in. <a href="index.php">Click here</a> to log in.';
+<?php 
+}else{
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/");
 }
-?>
