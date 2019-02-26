@@ -54,16 +54,17 @@ if(isset($_POST['postContent'])){
 
         //ASSIGN VALUES
         $authorId = $currentUser;
+        echo $currentUser;
         $date = new DateTime();
         $timeStamp = $date->format('Y-m-d H:i:s');
+
         $postBody = htmlspecialchars($_POST['postBody'],ENT_COMPAT | ENT_XHTML,'utf-8');
         if(!$postBody==""){
             //POST TO DB
             $statement = $pdo->prepare('INSERT INTO `posts` (`author_Id`, `timestamp`, `body`) VALUES (?, ?, ?)');
             $statement->execute([$authorId, $timeStamp, $postBody]);
         }else{
-
-            return;
+          return;
         }
     }
 }
@@ -82,10 +83,16 @@ if(isset($_POST['delete'])){
 //**** EDIT POST ****
 if(isset($_POST['edit'])){
     $postId = $_POST['postId'];
-    $newBody = $_POST['body'];
+    $newBody = htmlspecialchars($_POST['body'],ENT_COMPAT | ENT_XHTML,'utf-8');;
+
+    if(!$newBody ==""){
 
         $statement = $pdo->prepare('UPDATE `posts` SET `body` = ? WHERE `Id` = ?');
         $statement->execute([$newBody, $postId]);
+      }else{
+        $message = "The post body cannot be left empty";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+      }
 
 }
 
