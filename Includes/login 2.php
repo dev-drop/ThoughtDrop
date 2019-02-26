@@ -12,27 +12,21 @@ if(isset($_POST['register'])){
     $employee_Id = $_POST['employee_Id'];
     $display_name = $_POST['display_name'];
     $password = $_POST['password'];
-    
-    $validIdFormat = preg_match('/^[a-zA-Z]{1}[0-9]{5}$/', $employee_Id, $output_array);
-    if($validIdFormat == 1){
-        //HASH PASSWORD
-        $options = ['cost' =>12];
-        $hashedPass = password_hash($password, PASSWORD_BCRYPT, $options);
 
-        //CHECK FOR EXISTING USER
-        if(!userExists($employee_Id, $pdo)){
-            //PREARE & EXECUTE SQL REGISTER USER DATA
-            $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`) VALUES (?, ?, ?)');
-            $statement->execute([$employee_Id, $display_name, $hashedPass]);
-            $_SESSION['currentUser'] = $employee_Id;
-            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
-            //exit();
-        }else{
-            //Echo "Sorry, There is already a user by that Name";
-        }
+    //HASH PASSWORD
+    $options = ['cost' =>12];
+    $hashedPass = password_hash($password, PASSWORD_BCRYPT, $options);
+
+    //CHECK FOR EXISTING USER
+    if(!userExists($employee_Id, $pdo)){
+        //PREARE & EXECUTE SQL REGISTER USER DATA
+        $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`) VALUES (?, ?, ?)');
+        $statement->execute([$employee_Id, $display_name, $hashedPass]);
+        $_SESSION['currentUser'] = $employee_Id;
+        header("Location: http://localhost:8888/Thoughtdrop/home.php");
+        //exit();
     }else{
-        echo "Sorry, Id is incorrect Format";
-        return;
+        //Echo "Sorry, There is already a user by that Name";
     }
 }
 
@@ -72,7 +66,7 @@ if(isset($_POST['login'])){
         if($passVerified){
             //TO:DO SOMETHING HERE WHEN VERIFIED
             $_SESSION['currentUser'] = $result['employee_Id'];
-            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
+            header("Location: http://localhost:8888/Thoughtdrop/home.php");
             exit();
         }else{
             //echo "Password incorrect";

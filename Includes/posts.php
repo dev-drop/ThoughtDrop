@@ -16,9 +16,9 @@ function allPosts($pdo){
 $statement = $pdo->prepare('SELECT * FROM `posts` ORDER BY `timestamp` DESC LIMIT 100');
 $statement->execute();
 $result = $statement->fetchAll();
-    
+$filter = "all";    
     if($result > 0) { 
-        return $result;
+        return array($result, $filter);
     }
 }
 
@@ -26,12 +26,12 @@ $result = $statement->fetchAll();
 function rdPosts($pdo){
     
 //**** RETRIEVE POSTS FROM R&D ONLY ****    
-$statement = $pdo->prepare('SELECT * FROM `posts` ORDER BY `timestamp` DESC LIMIT 100');
-$statement->execute();
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE `author_Id` = ? ORDER BY `timestamp` DESC LIMIT 100');
+$statement->execute([$_SESSION['currentUser']]);
 $result = $statement->fetchAll();
-    
+$filter = "RD";  
     if($result > 0) { 
-        return $result;
+        return array($result, $filter);
     }
 }
 

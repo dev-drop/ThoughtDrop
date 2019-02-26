@@ -77,6 +77,13 @@ if (! empty($_SESSION['currentUser']))
         </div>
     </div>
 </section>
+<!--  An employee ID starts with a letter designating the department, followed by five numbers. D for R&D; S for marketing, sales, & support; and A for administration. 
+
+My employee ID is A00142 for example.
+
+  We still want to allow our employees to set their own display name, though. We think it would be good if the social platform would display the employee ID if no display name is set up, or else the display name with the employee ID behind it in brackets. 
+  
+  Does that make sense? We have an internal list of all employee IDs including names that is accessible by all employees, so the information is not sensitive within our company. The codes are used for our phone system and email. -->
 
 
 <!---  Feed    ----------------------------------------------------------------->
@@ -86,7 +93,7 @@ if (! empty($_SESSION['currentUser']))
     $userInfo = userProf($pdo);
     
     //*** FETCH ALL POSTS ***
-    $posts = init($pdo);
+    //$posts = allPosts($pdo);
     
     //*** SAVE VALUES FROM SUPERGLOBALS ***
     $employee_id = $userInfo['employee_Id'];
@@ -120,10 +127,10 @@ if (! empty($_SESSION['currentUser']))
     <!------------------>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item tab">
-            <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
+            <a class="nav-link active" id="all-tab" data-toggle="" href="" role="" aria-controls="" aria-selected="" onclick="tabFilter(1)">All</a>
           </li>
           <li class="nav-item tab">
-            <a class="nav-link" id="rd-tab" data-toggle="tab" href="#rd" role="tab" aria-controls="rd" aria-selected="false">R&D</a>
+            <a class="nav-link" id="rd-tab" data-toggle="" href="" role="" aria-controls="" aria-selected="" onclick="">R&D</a>
           </li>
           <li class="nav-item tab">
             <a class="nav-link" id="ms-tab" data-toggle="tab" href="#ms" role="tab" aria-controls="ms" aria-selected="false">M&S</a>
@@ -135,9 +142,10 @@ if (! empty($_SESSION['currentUser']))
         <div class="tab-content" id="myTabContent">
           <!--ALL TAB CONTENT----------------------------------------------->
           <?php
-            $rows = allPosts($pdo);
-            foreach ($rows as $row)
-            {
+            $rows = allPosts($pdo); 
+            if($rows[1] == "all"){
+            foreach ($rows[0] as $row)
+                {
           ?>
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <div class="card">
@@ -164,27 +172,50 @@ if (! empty($_SESSION['currentUser']))
           </div>
           <?php
             }
+            }
           ?>
           <!--RD TAB CONTENT----------------------------------------------->
-          <div class="tab-pane fade" id="rd" role="tabpanel" aria-labelledby="rd-tab">
-            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-              <div class="card rd">
-                <div class="card-body">
-                  <h5 class="card-title">Username</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE RD TAB</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
+          <?php
+            //$rows = rdPosts($pdo);
+            if($rows[1] == "RD"){
+            foreach ($rows[0] as $row)
+                {
+          ?>
+          <div class="tab-pane fade show active" id="RD" role="tabpanel" aria-labelledby="all-tab">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo $row['timestamp']." "; echo $row['author_Id']; ?></h5>
+                <p class="card-text"><?php echo $row['body']; ?></p>
               </div>
+              <?php
+                //VALIDATE USER FOR ADMIN PERMISSIONS
+                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']); 
+                if($adminOptions){
+                ?>
+              <div class="adminOpt">                                  
+                  <!-- OPEN EDIT MODAL WINDOW -->
+                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>                      
+                  <!-- DELETE POST FORM -->
+                  <form action="" class="deleteForm" method="post">
+                        <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
+                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button> 
+                  </form>
+              </div>
+              <?php } ?>   
             </div>
           </div>
+          <?php
+            }
+            }
+          ?>
 
           <!--ALL TAB CONTENT----------------------------------------------->
           <div class="tab-pane fade" id="ms" role="tabpanel" aria-labelledby="ms-tab">
-            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div class="tab-pane fade show active" id="" role="tabpanel" aria-labelledby="all-tab">
               <div class="card ms">
                 <div class="card-body">
                   <h5 class="card-title">Username</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE MS TAB</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">TESTING ONE</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
               </div>
@@ -193,11 +224,11 @@ if (! empty($_SESSION['currentUser']))
 
           <!--ALL TAB CONTENT----------------------------------------------->
           <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div class="tab-pane fade show active" id="" role="tabpanel" aria-labelledby="all-tab">
               <div class="card admin">
                 <div class="card-body">
                   <h5 class="card-title">Username</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">I AM A USER FROM THE ADMIN TAB</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">TESTING two</h6>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
               </div>
@@ -210,6 +241,14 @@ if (! empty($_SESSION['currentUser']))
   </div>
 </div>
 </div>
+<script>
+    function tabFilter(filter){
+    if(filter == 1){
+        <?php $rows = allPosts($pdo); ?>      
+    }
+    
+}
+    </script>
 
 <script src="scripts/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
