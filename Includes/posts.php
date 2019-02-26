@@ -25,8 +25,8 @@ $result = $statement->fetchAll();
 //**** GET POSTS FROM R&D *****
 function rdPosts($pdo){
 
-//**** RETRIEVE POSTS FROM R&D ONLY ****
-$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_Id`, 1, 1) = "R" LIMIT 100');
+
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_Id`, 1, 1) = "R" ORDER BY `timestamp` DESC LIMIT 100');
 $statement->execute();
 $result = $statement->fetchAll();
 
@@ -38,8 +38,8 @@ $result = $statement->fetchAll();
 //**** GET POSTS FROM MARKETING *****
 function msPosts($pdo){
 
-//**** RETRIEVE POSTS FROM R&D ONLY ****
-$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "M" LIMIT 100');
+
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "M" ORDER BY `timestamp` DESC LIMIT 100');
 $statement->execute();
 $result = $statement->fetchAll();
 
@@ -51,8 +51,8 @@ $result = $statement->fetchAll();
 //**** GET POSTS FROM ADMIN *****
 function adPosts($pdo){
 
-//**** RETRIEVE POSTS FROM R&D ONLY ****
-$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "A" LIMIT 100');
+
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "A" ORDER BY `timestamp` DESC LIMIT 100');
 $statement->execute();
 $result = $statement->fetchAll();
 
