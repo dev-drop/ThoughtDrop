@@ -52,7 +52,7 @@ Other solution would be to create another page for the registration instead of t
         ?>
         <input type="text" name="employee_Id" placeholder="Enter Your Employee ID" maxlength="6">
         <input type="text" name="display_name" placeholder="Enter Your User Name">
-        <input type="password" name="password" placeholder="Enter Your Password">
+        <input type="text" name="password" placeholder="Enter Your Password">
         <input type="submit" name="register" value="Register">
       </form>
 

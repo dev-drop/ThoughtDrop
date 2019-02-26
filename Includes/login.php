@@ -25,7 +25,7 @@ if(isset($_POST['register'])){
             $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`) VALUES (?, ?, ?)');
             $statement->execute([$employee_Id, $display_name, $hashedPass]);
             $_SESSION['currentUser'] = $employee_Id;
-            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop/home.php");
             //exit();
         }else{
             //Echo "Sorry, There is already a user by that Name";
@@ -72,7 +72,7 @@ if(isset($_POST['login'])){
         if($passVerified){
             //TO:DO SOMETHING HERE WHEN VERIFIED
             $_SESSION['currentUser'] = $result['employee_Id'];
-            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop/home.php");
             exit();
         }else{
             //echo "Password incorrect";

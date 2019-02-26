@@ -16,9 +16,9 @@ function allPosts($pdo){
 $statement = $pdo->prepare('SELECT * FROM `posts` ORDER BY `timestamp` DESC LIMIT 100');
 $statement->execute();
 $result = $statement->fetchAll();
-$filter = "all";
+
     if($result > 0) {
-        return array($result, $filter);
+        return $result;
     }
 }
 
@@ -26,12 +26,38 @@ $filter = "all";
 function rdPosts($pdo){
 
 //**** RETRIEVE POSTS FROM R&D ONLY ****
-$statement = $pdo->prepare('SELECT * FROM `posts` WHERE `author_Id` = ? ORDER BY `timestamp` DESC LIMIT 100');
-$statement->execute([$_SESSION['currentUser']]);
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_Id`, 1, 1) = "R" LIMIT 100');
+$statement->execute();
 $result = $statement->fetchAll();
-$filter = "RD";
+
     if($result > 0) {
-        return array($result, $filter);
+        return $result;
+    }
+}
+
+//**** GET POSTS FROM MARKETING *****
+function msPosts($pdo){
+
+//**** RETRIEVE POSTS FROM R&D ONLY ****
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "M" LIMIT 100');
+$statement->execute();
+$result = $statement->fetchAll();
+
+    if($result > 0) {
+        return $result;
+    }
+}
+
+//**** GET POSTS FROM ADMIN *****
+function adPosts($pdo){
+
+//**** RETRIEVE POSTS FROM R&D ONLY ****
+$statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "A" LIMIT 100');
+$statement->execute();
+$result = $statement->fetchAll();
+
+    if($result > 0) {
+        return $result;
     }
 }
 
@@ -54,17 +80,16 @@ if(isset($_POST['postContent'])){
 
         //ASSIGN VALUES
         $authorId = $currentUser;
-        echo $currentUser;
         $date = new DateTime();
         $timeStamp = $date->format('Y-m-d H:i:s');
-
         $postBody = htmlspecialchars($_POST['postBody'],ENT_COMPAT | ENT_XHTML,'utf-8');
         if(!$postBody==""){
             //POST TO DB
             $statement = $pdo->prepare('INSERT INTO `posts` (`author_Id`, `timestamp`, `body`) VALUES (?, ?, ?)');
             $statement->execute([$authorId, $timeStamp, $postBody]);
         }else{
-          return;
+
+            return;
         }
     }
 }
@@ -74,7 +99,7 @@ if(isset($_POST['delete'])){
 
     //TODO : CONFIRM DELETION OF THE POST
 
-    //DEFINE THE POST TO BE SEARHCED FOR AND DELETED
+    //DEFINE THE POST TO BE SEARCHED FOR AND DELETED
     $postId = $_POST['postId'];
     $statement = $pdo->prepare('DELETE FROM `posts` WHERE `Id` = ?');
     $statement->execute([$postId]);
@@ -95,6 +120,7 @@ if(isset($_POST['edit'])){
       }
 
 }
+
 
 //**** CHECK USER FOR POST MATCHES. ENABLE EDITING PERMISSIONS ****
 function validate_permissions($currentUser, $Author){
