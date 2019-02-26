@@ -77,35 +77,40 @@ if (! empty($_SESSION['currentUser']))
         </div>
     </div>
 </section>
-<!--  An employee ID starts with a letter designating the department, followed by five numbers. D for R&D; S for marketing, sales, & support; and A for administration. 
+<!--  An employee ID starts with a letter designating the department, followed by five numbers. D for R&D; S for marketing, sales, & support; and A for administration.
 
 My employee ID is A00142 for example.
 
-  We still want to allow our employees to set their own display name, though. We think it would be good if the social platform would display the employee ID if no display name is set up, or else the display name with the employee ID behind it in brackets. 
-  
+  We still want to allow our employees to set their own display name, though. We think it would be good if the social platform would display the employee ID if no display name is set up, or else the display name with the employee ID behind it in brackets.
+
   Does that make sense? We have an internal list of all employee IDs including names that is accessible by all employees, so the information is not sensitive within our company. The codes are used for our phone system and email. -->
 
 
 <!---  Feed    ----------------------------------------------------------------->
 <!-- USER PROFILE -->
-<?php 
+<?php
     //*** FETCH USER INFO ***
     $userInfo = userProf($pdo);
-    
+
     //*** FETCH ALL POSTS ***
     //$posts = allPosts($pdo);
-    
+
     //*** SAVE VALUES FROM SUPERGLOBALS ***
     $employee_id = $userInfo['employee_Id'];
     $display_name = $userInfo['display_name'];
-    $userThumb = $userInfo['thumbnail'];   
+    $userThumb = $userInfo['thumbnail'];
 ?>
 
 <div class="newsfeed container-fluid">
 <div class="row">
   <div class="profile-container col">
     <div class="profile-body">
-      <div class="profile-img"><img src="images/LindainAdmin.jpg" alt="ProfileImg"></div>
+      <div class="profile-img">
+        <img src="images/LindainAdmin.jpg" alt="ProfileImg">
+        <div id="overlay"><button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
+          <!--data-id=<"<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" -->
+        </button></div>
+      </div>
         <h2><?php echo $display_name ?></h2>
         <h3><?php echo $employee_id ?></h3>
 
@@ -142,7 +147,7 @@ My employee ID is A00142 for example.
         <div class="tab-content" id="myTabContent">
           <!--ALL TAB CONTENT----------------------------------------------->
           <?php
-            $rows = allPosts($pdo); 
+            $rows = allPosts($pdo);
             if($rows[1] == "all"){
             foreach ($rows[0] as $row)
                 {
@@ -155,19 +160,19 @@ My employee ID is A00142 for example.
               </div>
               <?php
                 //VALIDATE USER FOR ADMIN PERMISSIONS
-                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']); 
+                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
                 if($adminOptions){
                 ?>
-              <div class="adminOpt">                                  
+              <div class="adminOpt">
                   <!-- OPEN EDIT MODAL WINDOW -->
-                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>                      
+                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
-                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button> 
+                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button>
                   </form>
               </div>
-              <?php } ?>   
+              <?php } ?>
             </div>
           </div>
           <?php
@@ -189,19 +194,19 @@ My employee ID is A00142 for example.
               </div>
               <?php
                 //VALIDATE USER FOR ADMIN PERMISSIONS
-                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']); 
+                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
                 if($adminOptions){
                 ?>
-              <div class="adminOpt">                                  
+              <div class="adminOpt">
                   <!-- OPEN EDIT MODAL WINDOW -->
-                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>                      
+                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
-                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button> 
+                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button>
                   </form>
               </div>
-              <?php } ?>   
+              <?php } ?>
             </div>
           </div>
           <?php
@@ -244,9 +249,9 @@ My employee ID is A00142 for example.
 <script>
     function tabFilter(filter){
     if(filter == 1){
-        <?php $rows = allPosts($pdo); ?>      
+        <?php $rows = allPosts($pdo); ?>
     }
-    
+
 }
     </script>
 
@@ -255,7 +260,7 @@ My employee ID is A00142 for example.
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
-<?php 
+<?php
 }else{
    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/");
 }
