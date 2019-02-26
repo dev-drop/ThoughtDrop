@@ -250,10 +250,36 @@ input[type=text]:placeholder {
   width: 150px;
   height:150px;
   background-color: white;
+  position:relative;
+  overflow:hidden;
+}
+
+#overlay{
+  display:none;
+  position:absolute;
+  bottom:0;
+  text-align:center;
+  font-size: 60px;
+  color:white;
+  width:150px;
+  height:150px; /* Half of the container */
+  border-radius: 50%;
+  line-height:150px;
+  background-color:rgba(255,255,255,0.5);
+}
+.profile-img:hover #overlay{
+  display:block;
 }
 
 .profile-img>img{
   width: 150px;
+  border-radius: 50%;
+}
+
+#overlay>button{
+  background-color: transparent;
+  border: 0;
+  padding: 50px;
   border-radius: 50%;
 }
 
