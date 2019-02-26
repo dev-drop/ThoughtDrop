@@ -19,7 +19,8 @@ if (! empty($_SESSION['currentUser']))
 
 </head>
 <body id="bod" data-spy="scroll" data-target=".navbar-light" data-offset="300">
-<!-- EDIT MODAL -->
+
+<!--                        EDIT POST MODAL                             -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -40,6 +41,28 @@ if (! empty($_SESSION['currentUser']))
             </div>
         </div>
     </div>
+
+    <!--                        CHANGE PROFILE PHOTO MODAL                             -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Post</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- EDIT FORM -->
+                    <form action="" method="post">
+                        <div class="modal-body">
+                            <input type="hidden" id="editId" name="postId" value="" />
+                            <input type="text" id="editBody" name="body" value="" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info btn-lg" name="edit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 
 <!--Navigation bar-->
@@ -106,7 +129,7 @@ My employee ID is A00142 for example.
   <div class="profile-container col">
     <div class="profile-body">
       <div class="profile-img">
-        <img src="images/LindainAdmin.jpg" alt="ProfileImg">
+        <img src="images/proImg.png" alt="ProfileImg">
         <div id="overlay"><button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
           <!--data-id=<"<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" -->
         </button></div>
@@ -155,7 +178,8 @@ My employee ID is A00142 for example.
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><?php echo $row['timestamp']." "; echo $row['author_Id']; ?></h5>
+                <h5 class="card-title"><?php echo $row['author_Id']; ?></h5>
+                <p><?php echo $row['timestamp']." "; ?></p>
                 <p class="card-text"><?php echo $row['body']; ?></p>
               </div>
               <?php
@@ -262,5 +286,5 @@ My employee ID is A00142 for example.
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.2/");
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughDrop%20V1.3/");
 }

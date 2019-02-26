@@ -36,7 +36,7 @@
          echo '<div class="error">Invalid Username or Password</div>';
         ?>
         <input type="text" name="employee_Id" placeholder="Employee ID" maxlength="6">
-        <input type="text" name="password" placeholder="Password">
+        <input type="password" name="password" placeholder="Password">
         <input type="submit" name="login" value="Log In">
       </form>
 
@@ -52,7 +52,7 @@ Other solution would be to create another page for the registration instead of t
         ?>
         <input type="text" name="employee_Id" placeholder="Enter Your Employee ID" maxlength="6">
         <input type="text" name="display_name" placeholder="Enter Your User Name">
-        <input type="text" name="password" placeholder="Enter Your Password">
+        <input type="password" name="password" placeholder="Enter Your Password">
         <input type="submit" name="register" value="Register">
       </form>
 
