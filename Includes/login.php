@@ -22,9 +22,10 @@ if(isset($_POST['register'])){
         //CHECK FOR EXISTING USER
         if(!userExists($employee_Id, $pdo)){
             //PREARE & EXECUTE SQL REGISTER USER DATA
-            $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`) VALUES (?, ?, ?)');
+            $statement = $pdo->prepare('INSERT INTO `employee` (`employee_Id`, `display_name`, `password`, `role`) VALUES (?, ?, ?, 10)');
             $statement->execute([$employee_Id, $display_name, $hashedPass]);
             $_SESSION['currentUser'] = $employee_Id;
+            $_SESSION['userRole'] = 10;
             header("Location: http://localhost:8888/ThoughtDrop/home.php");
             //exit();
         }else{
@@ -72,6 +73,7 @@ if(isset($_POST['login'])){
         if($passVerified){
             //TO:DO SOMETHING HERE WHEN VERIFIED
             $_SESSION['currentUser'] = $result['employee_Id'];
+            $_SESSION['userRole'] = $result['role'];
             header("Location: http://localhost:8888/ThoughtDrop/home.php");
             exit();
         }else{

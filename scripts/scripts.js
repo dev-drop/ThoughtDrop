@@ -81,6 +81,9 @@ function auto_grow(element) {
 $(document).on("click", ".editModal", function () {
     var editId = $(this).data('id');
     var editBody = $(this).data('val');
+    var editAuthor = $(this).data('author');
+    
     $(".modal-body #editId").val( editId );
     $(".modal-body #editBody").val( editBody );
+    $(".modal-body #authorId").val( editAuthor );
 });

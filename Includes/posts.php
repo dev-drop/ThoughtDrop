@@ -108,19 +108,23 @@ if(isset($_POST['delete'])){
 //**** EDIT POST ****
 if(isset($_POST['edit'])){
     $postId = $_POST['postId'];
+    $authorId = $_POST['author_Id'];
     $newBody = htmlspecialchars($_POST['body'],ENT_COMPAT | ENT_XHTML,'utf-8');;
 
     if(!$newBody ==""){
-
-        $statement = $pdo->prepare('UPDATE `posts` SET `body` = ? WHERE `Id` = ?');
-        $statement->execute([$newBody, $postId]);
-      }else{
+        
+        if($_SESSION['userRole'] == 127 || $currentUser == $authorId){
+            $statement = $pdo->prepare('UPDATE `posts` SET `body` = ? WHERE `Id` = ? AND `author_Id` = ?');
+            $statement->execute([$newBody, $postId, $authorId]);
+        }else{
+            return;
+        }
+      
+    }else{
         $message = "The post body cannot be left empty";
         echo "<script type='text/javascript'>alert('$message');</script>";
       }
-
 }
-
 
 //**** CHECK USER FOR POST MATCHES. ENABLE EDITING PERMISSIONS ****
 function validate_permissions($currentUser, $Author){

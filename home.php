@@ -30,6 +30,7 @@ if (! empty($_SESSION['currentUser']))
                 <!-- EDIT FORM -->
                 <form action="" method="post">
                     <div class="modal-body">
+                        <input type="hidden" id="authorId" name="author_Id" values="">
                         <input type="hidden" id="editId" name="postId" value="" />
                         <input type="text" id="editBody" name="body" value="" />
                     </div>
@@ -137,7 +138,7 @@ if (! empty($_SESSION['currentUser']))
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <!--ALL TAB CONTENT----------------------------------------------->
+          <!------- FILTERED TEMPLATES SECTION --------->
           <?php
             $filter = "allPosts";
             if(isset($_GET['filter'])){
@@ -165,11 +166,12 @@ if (! empty($_SESSION['currentUser']))
               <?php
                 //VALIDATE USER FOR ADMIN PERMISSIONS
                 $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
-                if($adminOptions){
+                if($adminOptions || ($_SESSION['userRole'] == 127)){
                 ?>
               <div class="adminOpt">
                   <!-- OPEN EDIT MODAL WINDOW -->
-                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>
+                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>
+                 
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
@@ -183,6 +185,7 @@ if (! empty($_SESSION['currentUser']))
             }            
           ?>
         </div>
+        <!------- END FILTERED TEMPLATES SECTION --------->
 </div>
 
   <div class="col">
