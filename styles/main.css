@@ -212,6 +212,10 @@ input[type=text]:placeholder input[type=password]:placeholder{
 
 
 /*-------------------------------------------------------NEWS FEED-----------------------------------------------------*/
+
+.col-8{
+  padding: 0!important;
+}
 .statusTA::placeholder {
   font-style: italic;
   font-size: 0.875rem;
@@ -224,6 +228,20 @@ input[type=text]:placeholder input[type=password]:placeholder{
   max-height: 100px;
 }
 
+.statusTAsubmit{
+  float: right;
+  background-color: transparent;
+}
+
+#postStatus {
+    display: flex;
+}
+
+.form-control{
+  display: initial!important;
+}
+
+
 
 #the-count {
   float: right;
@@ -235,13 +253,20 @@ input[type=text]:placeholder input[type=password]:placeholder{
 .newsfeed{
   width: 100%;
   background: url('../images/background.jpg') center;
+  background-repeat: repeat;
   height: auto;
-  margin: 100px auto;
+  margin: 100px auto 0;
+  padding-bottom: 200px;
+  padding-top: 100px;
 }
 
 .profile-body{
   margin: 0 auto;
   float:right;
+}
+
+.profile-body>h2, .profile-body>h3{
+  margin: 0 auto;
 }
 
 .profile-img{
@@ -250,6 +275,7 @@ input[type=text]:placeholder input[type=password]:placeholder{
   background-color: white;
   position:relative;
   overflow:hidden;
+  margin: 0 auto;
 }
 
 #overlay{
@@ -295,16 +321,24 @@ a{
   color: #1e2421;
 }
 
+#timestamp{
+  text-align: right;
+  font-size: .75em;
+  float: right;
+  margin-top: -34px;
+}
+
 
 .card{
   margin-bottom: 10px!important;
-  border: 2px solid;
+  border: 3px solid #f5f5f5;
 }
 
 #all-tab{
   background-color: #f5f5f5;
   opacity: .75;
 }
+
 
 .all{
     border-color: #f5f5f5;
@@ -315,6 +349,7 @@ a{
   opacity: .75;
 }
 
+
 .rd{
   border-color: #a7d1c0;
 }
@@ -324,6 +359,7 @@ a{
   opacity: .75;
 }
 
+
 .ms{
   border-color: #ffcc61;
 }
@@ -332,6 +368,8 @@ a{
   background-color: #c5a8d0;
   opacity: .75;
 }
+
+
 .admin{
   border-color: #c5a8d0;
 }
@@ -345,6 +383,27 @@ a{
     bottom: 0px;
     position: absolute;
 }
+
+.icon{
+  background-color: transparent;
+  border: 0;
+
+}
+
+.icon>img{
+  height:25px;
+  width:25px;
+}
+
+.icon:hover{
+  cursor: pointer;
+}
+
+.icon:active{
+  border-radius: 50%;
+  border-color: #cbedfd;
+}
+
 .deleteForm{
     margin-left: 5px;
     float:right;

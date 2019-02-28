@@ -15,6 +15,7 @@ if (! empty($_SESSION['currentUser']))
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
 
 
 </head>
@@ -100,7 +101,7 @@ if (! empty($_SESSION['currentUser']))
     <div class="profile-body">
       <div class="profile-img">
         <img src="images/LindainAdmin.jpg" alt="ProfileImg">
-        <div id="overlay"><button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
+        <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
           <!--data-id=<"<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" -->
         </button></div>
       </div>
@@ -113,13 +114,13 @@ if (! empty($_SESSION['currentUser']))
   <div class="col-8">
   <!-- NEW POST FORM -->
    <form action="" method="post">
-        <div class="form-group">
-          <textarea placeholder="Drop Your Thoughts" class="form-control statusTA" id="exampleFormControlTextarea3" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
-          <button type="submit" class="btn btn-info btn-lg" name="postContent">Post</button>
-          <div id="the-count">
-            <span id="current">0</span>
-            <span id="maximum">/ 300</span>
-          </div>
+        <div class="form-group" id="postStatus">
+          <textarea placeholder="Drop Your Thoughts" class="form-control statusTA" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
+          <button type="submit" class="btn statusTAsubmit " name="postContent"><img src="images/sendcloud.png"/></button>
+        </div>
+        <div id="the-count">
+          <span id="current">0</span>
+          <span id="maximum">/ 300</span>
         </div>
     </form>
     <!--------TAB NAVIGATION ---------->
@@ -138,21 +139,21 @@ if (! empty($_SESSION['currentUser']))
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <!------- FILTERED TEMPLATES SECTION --------->
+          <!-- FILTERED TEMPLATES SECTION ----------------------------------------------->
           <?php
             $filter = "allPosts";
             if(isset($_GET['filter'])){
-                $filter = $_GET['filter'];    
+                $filter = $_GET['filter'];
             }
             switch($filter){
                 case "allPosts": $rows = allPosts($pdo);
-                break;    
+                break;
                 case "rdPosts": $rows = rdPosts($pdo);
                 break;
                 case "msPosts": $rows = msPosts($pdo);
-                break;    
+                break;
                 case "adPosts": $rows = adPosts($pdo);
-                break; 
+                break;
             }
             foreach ($rows as $row)
                 {
@@ -160,8 +161,17 @@ if (! empty($_SESSION['currentUser']))
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><?php echo $row['timestamp']." "; echo $row['author_Id']; ?></h5>
+                <div id="cardheader">
+                  <h5 class="card-title"><?php echo $row['author_Id']; ?></h5>
+                  <p id="timestamp"><?php echo $row['timestamp'] ?></p>
+                </div>
+
+                <hr>
                 <p class="card-text"><?php echo $row['body']; ?></p>
+                <div>
+                  <button class="icon"><img src="images/like.png"/></button>
+                  <button class="icon"><img src="images/chat.png"/></button>
+                </div>
               </div>
               <?php
                 //VALIDATE USER FOR ADMIN PERMISSIONS
@@ -170,22 +180,21 @@ if (! empty($_SESSION['currentUser']))
                 ?>
               <div class="adminOpt">
                   <!-- OPEN EDIT MODAL WINDOW -->
-                 <button type="button" class="btn btn-info btn-lg editModal" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" >Edit Post</button>
-                 
+                  <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><img src="images/pencil.png"/></button>
+                 </button>
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
-                        <button class="btn btn-info btn-lg"  type="submit" name="delete">Delete</button>
+                        <button class="icon"  type="submit" name="delete"><img src="images/trash-bin.png"/></button>
                   </form>
               </div>
               <?php } ?>
             </div>
           </div>
           <?php
-            }            
+            }
           ?>
         </div>
-        <!------- END FILTERED TEMPLATES SECTION --------->
 </div>
 
   <div class="col">
