@@ -42,6 +42,7 @@ if (! empty($_SESSION['currentUser']))
             </div>
         </div>
     </div>
+    
 
 
 <!--Navigation bar-->
@@ -73,6 +74,9 @@ if (! empty($_SESSION['currentUser']))
 <section class="bgimage">
     <div class="container-fluid">
         <div class="row">
+          <img src="images/001-clouds.png" id="cld1" alt="">
+           <img src="images/001-clouds.png" id="cld3" alt="">
+           <img src="images/001-clouds.png" id="cld2" alt="">
             <div class="hero-text">
                 <img src="images/TDLogo300.png"/>
             </div>
@@ -159,10 +163,10 @@ if (! empty($_SESSION['currentUser']))
                 {
           ?>
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <div class="card">
+            <div class="card <?php echo postColor($row['author_Id']); ?>">
               <div class="card-body cardheader">
               <div id="cardheader">
-                <h5 class="card-title"><?php echo $row['author_Id']; ?></h5>
+                <h5 class="card-title"><?php echo displayName($pdo, $row['author_Id']); ?></h5>
                 <p id="timestamp"><?php echo $row['timestamp'] ?></p>
               </div>
             </div>
@@ -218,5 +222,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop/");
+   header("Location: http://localhost:8888/ThoughtDrop-master3/");
 }

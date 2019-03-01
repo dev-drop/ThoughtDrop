@@ -126,6 +126,39 @@ if(isset($_POST['edit'])){
       }
 }
 
+
+//**** ASSIGN POST COLOR *****
+function postColor($author){
+    $RD = "rd";
+    $MS = "ms";
+    $admin = "admin";
+    
+    $firstCharacter = $author[0];
+    switch($firstCharacter){
+        case "A": return $admin;
+            break;
+        case "R": return $RD;
+            break;
+        case "M": return $MS;
+            break;         
+    }
+}
+
+//**** GET DISPLAY_NAME ****
+function displayName($pdo, $author){
+    $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
+    $statement->execute([$author]);
+    $result = $statement->fetch();
+    if($result){
+        return $result['display_name'];
+    }else{
+        return $author;
+    }
+   
+    
+}
+
+
 //**** CHECK USER FOR POST MATCHES. ENABLE EDITING PERMISSIONS ****
 function validate_permissions($currentUser, $Author){
         if($currentUser == $Author){

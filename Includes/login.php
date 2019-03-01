@@ -26,7 +26,7 @@ if(isset($_POST['register'])){
             $statement->execute([$employee_Id, $display_name, $hashedPass]);
             $_SESSION['currentUser'] = $employee_Id;
             $_SESSION['userRole'] = 10;
-            header("Location: http://localhost:8888/ThoughtDrop/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop-master3/home.php");
             //exit();
         }else{
             //Echo "Sorry, There is already a user by that Name";
@@ -74,7 +74,7 @@ if(isset($_POST['login'])){
             //TO:DO SOMETHING HERE WHEN VERIFIED
             $_SESSION['currentUser'] = $result['employee_Id'];
             $_SESSION['userRole'] = $result['role'];
-            header("Location: http://localhost:8888/ThoughtDrop/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop-master3/home.php");
             exit();
         }else{
             //echo "Password incorrect";
@@ -89,7 +89,7 @@ if(isset($_POST['logout'])){
 
     //TODO : LOGOUT FUNCTION
     Unset($_SESSION['currentUser']);
-    header("Location: http://localhost:8888/Thoughtdrop");
+    header("Location: http://localhost:8888/ThoughtDrop-master3");
     exit();
 }
 
