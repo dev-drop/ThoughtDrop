@@ -57,14 +57,14 @@ if (! empty($_SESSION['currentUser']))
               <div class="input-group mb-3 searchform">
                 <input id="searchbar" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-light btn-sm searchbtn" type="button" id="button-addon2"><img id="searchimg" src="images/search.png"/></button>
+                    <button class="searchbtn" type="sumbit" name="search" id="button-addon2"><img id="searchimg" src="images/search.png"/></button>
                 </div>
               </div>
-
             </li>
+
             <form action="" method="post">
                 <li class="nav-item">
-                    <button type="submit" name="logout">Logout</button>
+                    <button class="logout" type="submit" name="logout">Logout</button>
                 </li>
             </form>
         </ul>
@@ -74,7 +74,7 @@ if (! empty($_SESSION['currentUser']))
     <div class="container-fluid">
         <div class="row">
             <div class="hero-text">
-                <h1>ThoughtDrop</h1>
+                <img src="images/TDLogo300.png"/>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@ if (! empty($_SESSION['currentUser']))
    <form action="" method="post">
         <div class="form-group" id="postStatus">
           <textarea placeholder="Drop Your Thoughts" class="form-control statusTA" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
-          <button type="submit" class="btn statusTAsubmit " name="postContent"><img src="images/sendcloud.png"/></button>
+          <button type="submit" class="btn statusTAsubmit " name="postContent"><img src="images/cloud-computing.png"/></button>
         </div>
         <div id="the-count">
           <span id="current">0</span>
@@ -160,18 +160,28 @@ if (! empty($_SESSION['currentUser']))
           ?>
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <div class="card">
-              <div class="card-body">
-                <div id="cardheader">
-                  <h5 class="card-title"><?php echo $row['author_Id']; ?></h5>
-                  <p id="timestamp"><?php echo $row['timestamp'] ?></p>
-                </div>
+              <div class="card-body cardheader">
+              <div id="cardheader">
+                <h5 class="card-title"><?php echo $row['author_Id']; ?></h5>
+                <p id="timestamp"><?php echo $row['timestamp'] ?></p>
+              </div>
+            </div>
 
-                <hr>
+              <div class="card-body">
                 <p class="card-text"><?php echo $row['body']; ?></p>
                 <div>
-                  <button class="icon"><img src="images/like.png"/></button>
-                  <button class="icon"><img src="images/chat.png"/></button>
+                  <button class="icon"><i class="fas fa-thumbs-up thumb"></i></button>
+                  <button class="icon"><i class="fas fa-comment writecomment"></i></button>
                 </div>
+                <div class="card-comment">
+                  <form action="" method="post">
+                       <div class="form-group" id="postComment">
+                         <textarea placeholder="Write a Comment" class="form-control commentTA" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
+                         <button type="submit" class="btn statusTAsubmit" name="postContent"><img src="images/sendSM.png"/></button>
+                       </div>
+                   </form>
+                </div>
+                
               </div>
               <?php
                 //VALIDATE USER FOR ADMIN PERMISSIONS
@@ -180,12 +190,12 @@ if (! empty($_SESSION['currentUser']))
                 ?>
               <div class="adminOpt">
                   <!-- OPEN EDIT MODAL WINDOW -->
-                  <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><img src="images/pencil.png"/></button>
+                  <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><i class="fas fa-edit"></i></button>
                  </button>
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
-                        <button class="icon"  type="submit" name="delete"><img src="images/trash-bin.png"/></button>
+                        <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
                   </form>
               </div>
               <?php } ?>

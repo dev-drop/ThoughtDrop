@@ -26,7 +26,7 @@
 
       <!-- Icon -->
       <div class="fadeIn first">
-        <img src="images/cloud.png" id="icon" alt="ThoughtDrop" />
+        <img src="images/TDLogo300.png" id="icon" alt="ThoughtDrop" />
       </div>
 
       <!-- Login Form -->

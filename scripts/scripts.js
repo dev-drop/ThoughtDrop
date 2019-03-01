@@ -26,7 +26,14 @@ $(function() {
 
   });
 
+  $(".thumb").click(function(){
+    $(this).toggleClass('like');
 
+  });
+
+  $(".writecomment").click(function(){
+    $(this,".card-comment").toggle('comment');
+  });
 
 
 
@@ -82,7 +89,7 @@ $(document).on("click", ".editModal", function () {
     var editId = $(this).data('id');
     var editBody = $(this).data('val');
     var editAuthor = $(this).data('author');
-    
+
     $(".modal-body #editId").val( editId );
     $(".modal-body #editBody").val( editBody );
     $(".modal-body #authorId").val( editAuthor );
