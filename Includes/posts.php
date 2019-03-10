@@ -3,14 +3,18 @@ require "db.php";
 date_default_timezone_set('America/Vancouver');
 
 //**** ASSIGN EMPLOYEE ID TO SESSION AFTER LOGIN ****
-if($_SESSION){
+if($_SESSION)
+{
     $currentUser = $_SESSION['currentUser'];
-}else{
+}
+else
+{
     $currentUser = false;
 }
 
 //**** GET POSTS ****
-function allPosts($pdo){
+function allPosts($pdo)
+{
 
 //**** RETRIEVE 100 NEWEST POSTS ****
 $statement = $pdo->prepare('SELECT * FROM `posts` ORDER BY `timestamp` DESC LIMIT 100');
@@ -23,7 +27,8 @@ $result = $statement->fetchAll();
 }
 
 //**** GET POSTS FROM R&D *****
-function rdPosts($pdo){
+function rdPosts($pdo)
+{
 
 
 $statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_Id`, 1, 1) = "R" ORDER BY `timestamp` DESC LIMIT 100');
@@ -36,7 +41,8 @@ $result = $statement->fetchAll();
 }
 
 //**** GET POSTS FROM MARKETING *****
-function msPosts($pdo){
+function msPosts($pdo)
+{
 
 
 $statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "M" ORDER BY `timestamp` DESC LIMIT 100');
@@ -49,7 +55,8 @@ $result = $statement->fetchAll();
 }
 
 //**** GET POSTS FROM ADMIN *****
-function adPosts($pdo){
+function adPosts($pdo)
+{
 
 
 $statement = $pdo->prepare('SELECT * FROM `posts` WHERE substring(`author_ID`, 1, 1) = "A" ORDER BY `timestamp` DESC LIMIT 100');
@@ -62,7 +69,8 @@ $result = $statement->fetchAll();
 }
 
 //**** FETCH USER INFO ****
-function userProf($pdo){
+function userProf($pdo)
+{
    //SEARCH FOR USER PROFILE
     $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
     $statement->execute([$_SESSION['currentUser']]);
@@ -72,7 +80,8 @@ function userProf($pdo){
 }
 
 //**** COMMIT NEW POST ****
-if(isset($_POST['postContent'])){
+if(isset($_POST['postContent']))
+{
     if(!$currentUser){
         echo "Please Sign In";
         return;
@@ -95,7 +104,8 @@ if(isset($_POST['postContent'])){
 }
 
 //**** DELETE POST ****
-if(isset($_POST['delete'])){
+if(isset($_POST['delete']))
+{
 
     //TODO : CONFIRM DELETION OF THE POST
 
@@ -106,7 +116,8 @@ if(isset($_POST['delete'])){
 }
 
 //**** EDIT POST ****
-if(isset($_POST['edit'])){
+if(isset($_POST['edit']))
+{
     $postId = $_POST['postId'];
     $authorId = $_POST['author_Id'];
     $newBody = htmlspecialchars($_POST['body'],ENT_COMPAT | ENT_XHTML,'utf-8');;
@@ -126,9 +137,9 @@ if(isset($_POST['edit'])){
       }
 }
 
-
 //**** ASSIGN POST COLOR *****
-function postColor($author){
+function postColor($author)
+{
     $RD = "rd";
     $MS = "ms";
     $admin = "admin";
@@ -145,22 +156,23 @@ function postColor($author){
 }
 
 //**** GET DISPLAY_NAME ****
-function displayName($pdo, $author){
+function displayName($pdo, $author)
+{
     $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
     $statement->execute([$author]);
     $result = $statement->fetch();
-    if($result){
+    if(!$result['display_name'] == null){
         return $result['display_name'];
     }else{
-        return $author;
+        return $result['employee_Id'];
     }
    
     
 }
 
-
 //**** CHECK USER FOR POST MATCHES. ENABLE EDITING PERMISSIONS ****
-function validate_permissions($currentUser, $Author){
+function validate_permissions($currentUser, $Author)
+{
         if($currentUser == $Author){
             //ENABLE PERMISSION TO EDIT / DELETE POST
             return true;

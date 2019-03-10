@@ -317,7 +317,7 @@ input[type=text]:placeholder input[type=password]:placeholder{
 .profile-img{
   width: 150px;
   height:150px;
-  background-color: white;
+  background-color: none!important;
   position:relative;
   overflow:hidden;
   margin: 0 auto;
@@ -488,7 +488,7 @@ a{
     position: absolute;
     left:-200px;
     top:60px;
-    animation: Cloudsright 15s linear infinite;
+    animation: Cloudsright 15s linear infinite; 
 }
 
 

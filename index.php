@@ -2,6 +2,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +39,7 @@
         ?>
         <input type="text" name="employee_Id" placeholder="Employee ID" maxlength="6">
         <input type="password" name="password" placeholder="Password">
+        <input type="password" name="authenticate" placeholder="GoogleAuthenticate ( if enabled )" maxlength="6">
         <input type="submit" name="login" value="Log In">
       </form>
 

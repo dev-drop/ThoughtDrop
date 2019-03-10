@@ -1,5 +1,5 @@
 <?php
-require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php';
+require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php';
 if (! empty($_SESSION['currentUser']))
 {
 ?>
@@ -20,6 +20,17 @@ if (! empty($_SESSION['currentUser']))
 
 </head>
 <body id="bod" data-spy="scroll" data-target=".navbar-light" data-offset="300">
+<!-- USER PROFILE -->
+<?php
+    //*** FETCH USER INFO ***
+    $userInfo = userProf($pdo);
+
+    //*** SAVE VALUES FROM SUPERGLOBALS ***
+    $employee_id = $userInfo['employee_Id'];
+    $display_name = $userInfo['display_name'];
+    $userThumb = $userInfo['thumbnail'];
+    $secret = $userInfo['secret'];
+?>
 <!-- EDIT MODAL -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -33,7 +44,7 @@ if (! empty($_SESSION['currentUser']))
                     <div class="modal-body">
                         <input type="hidden" id="authorId" name="author_Id" values="">
                         <input type="hidden" id="editId" name="postId" value="" />
-                        <input type="text" id="editBody" name="body" value="" />
+                        <input type="text" id="editBody" name="body" value="" maxlength="300"/>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-info btn-lg" name="edit">Submit</button>
@@ -42,6 +53,57 @@ if (! empty($_SESSION['currentUser']))
             </div>
         </div>
     </div>
+    
+<!-- AUTH MODAL -->
+  <div class="modal fade" id="myAuth" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Google Authenticator</h4>
+        </div>
+        <div class="modal-body">
+         <?php $authInfo = goAuthInit($ga);?>
+          <img src="<?php echo $authInfo[1]; ?>" alt="">
+          <p><?php echo $authInfo[0]; ?></p>
+          <form action="" method="POST">
+            <input type="hidden" name="secret" value="<?php echo $authInfo[0]; ?>">
+            <input type="password" name="code" maxlength="6">
+            <button class="btn btn-primary" type="submit" name="submitCode">GoogleAuth Code</button>
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- DisAUTH MODAL -->
+  <div class="modal fade" id="disAuth" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Disable Google Authenticator</h4>
+        </div>
+        <div class="modal-body">
+         <?php $authInfo = goAuthInit($ga);?>
+          <img src="<?php echo $authInfo[1]; ?>" alt="">
+          <p><?php echo $secret;  ?></p>
+          <form action="" method="POST">
+            <input type="hidden" name="secretDis" value="<?php echo $secret; ?>">
+            <input type="password" name="code" maxlength="6">
+            <button class="btn btn-danger" type="submit" name="submitDisCode">Disable GoogleAuth</button>
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>    
+
     
 
 
@@ -74,43 +136,37 @@ if (! empty($_SESSION['currentUser']))
 <section class="bgimage">
     <div class="container-fluid">
         <div class="row">
-          <img src="images/001-clouds.png" id="cld1" alt="">
-           <img src="images/001-clouds.png" id="cld3" alt="">
-           <img src="images/001-clouds.png" id="cld2" alt="">
+          <img src="images/cloudswhite.png" id="cld1" alt="">
+           <img src="images/cloudswhite.png" id="cld3" alt="">
+           <img src="images/cloudswhite.png" id="cld2" alt="">
             <div class="hero-text">
                 <img src="images/TDLogo300.png"/>
             </div>
         </div>
     </div>
 </section>
-
 <!---  Feed    ----------------------------------------------------------------->
-<!-- USER PROFILE -->
-<?php
-    //*** FETCH USER INFO ***
-    $userInfo = userProf($pdo);
-
-    //*** FETCH ALL POSTS ***
-    //$posts = allPosts($pdo);
-
-    //*** SAVE VALUES FROM SUPERGLOBALS ***
-    $employee_id = $userInfo['employee_Id'];
-    $display_name = $userInfo['display_name'];
-    $userThumb = $userInfo['thumbnail'];
-?>
 
 <div class="newsfeed container-fluid">
 <div class="row">
   <div class="profile-container col">
     <div class="profile-body">
       <div class="profile-img">
-        <img src="images/LindainAdmin.jpg" alt="ProfileImg">
+        <img src="<?php echo assignImage(); ?>" alt="ProfileImg">
         <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
           <!--data-id=<"<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" -->
         </button></div>
       </div>
-        <h2><?php echo $display_name ?></h2>
-        <h3><?php echo $employee_id ?></h3>
+        <h2 style="font-weight: bolder;"><?php echo $display_name ?></h2>
+        <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3><br>
+        <?php 
+            if(!$_SESSION['GoogleAuth'])
+            {
+        ?>
+        <button type="button" class="btn btn-primary show" data-toggle="modal" data-target="#myAuth">Enable GoogleAuth</button>
+        <?php }else{ ?>
+        <button type="button" class="btn btn-danger hidden" data-toggle="modal" data-target="#disAuth">Disable GoogleAuth</button>
+        <?php } ?>
 
     </div>
   </div>
@@ -165,8 +221,8 @@ if (! empty($_SESSION['currentUser']))
           <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
             <div class="card <?php echo postColor($row['author_Id']); ?>">
               <div class="card-body cardheader">
-              <div id="cardheader">
-                <h5 class="card-title"><?php echo displayName($pdo, $row['author_Id']); ?></h5>
+              <div id="cardheader row">
+                <h5 class="card-title"><img src="<?php echo assignImage(); ?>" alt="" style="width:50px; height:50px; border-radius: 10px;"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
                 <p id="timestamp"><?php echo $row['timestamp'] ?></p>
               </div>
             </div>
