@@ -59,7 +59,6 @@ if (! empty($_SESSION['currentUser']))
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Google Authenticator</h4>
         </div>
         <div class="modal-body">
@@ -89,8 +88,6 @@ if (! empty($_SESSION['currentUser']))
         </div>
         <div class="modal-body">
          <?php $authInfo = goAuthInit($ga);?>
-          <img src="<?php echo $authInfo[1]; ?>" alt="">
-          <p><?php echo $secret;  ?></p>
           <form action="" method="POST">
             <input type="hidden" name="secretDis" value="<?php echo $secret; ?>">
             <input type="password" name="code" maxlength="6">
@@ -102,7 +99,28 @@ if (! empty($_SESSION['currentUser']))
         </div>
       </div>
     </div>
-  </div>    
+  </div>
+    
+<!-- COMMENT MODAL -->
+    <div class="modal fade" id="commModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Comment</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                    <div class="modal-body">
+                        <!--<input type="hidden" id="authorId" name="author_Id" values=""> -->
+                           <!--  <input type="hidden" id="editId" name="postId" value="" /> -->
+                        <!-- <input type="text" id="" name="body" value="" maxlength="300"/> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info btn-lg" name="edit">Submit</button>
+                    </div>
+            </div>
+        </div>
+    </div>    
 
     
 
@@ -231,7 +249,7 @@ if (! empty($_SESSION['currentUser']))
                 <p class="card-text"><?php echo $row['body']; ?></p>
                 <div>
                   <button class="icon"><i class="fas fa-thumbs-up thumb"></i></button>
-                  <button class="icon"><i class="fas fa-comment writecomment"></i></button>
+                  <button class="icon comment" data-toggle="modal" data-target="#commModal" data-val="<?php echo $row['body']; ?>"><i class="fas fa-comment writecomment"></i></button>
                 </div>
                 <div class="card-comment">
                   <form action="" method="post">
@@ -270,7 +288,7 @@ if (! empty($_SESSION['currentUser']))
   <div class="col">
   </div>
 </div>
-</div>
+
 <script src="scripts/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
