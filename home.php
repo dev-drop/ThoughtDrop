@@ -1,11 +1,21 @@
 <?php
-require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php';
+require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php'; require 'Includes/search.php';
 if (! empty($_SESSION['currentUser']))
 {
 ?>
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
+  <!--Meta for Open Graph-->
+    <meta property="og:title" content="ThoughtDrop | Drop Your Thoughts" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="An internal social media platform with your employees in mind." />
+    <meta property="og:url" content="http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.6/home.php" />
+    <meta property="og:image" content="http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.6/images/ThoughtDropLogo.png" />
+    <meta property="og:image:width" content="300" />
+    <meta property="og:image:height" content="300" />
+    <meta property="og:image:alt" content="ThoughtDrop logo" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThoughtDrop</title>
@@ -14,15 +24,18 @@ if (! empty($_SESSION['currentUser']))
     <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
+
+
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
 
 
 </head>
 <body id="bod" data-spy="scroll" data-target=".navbar-light" data-offset="300">
-<!-- USER PROFILE -->
+<!-- USER PROFILE -------------------------------------------------------------->
+
 <?php
-    //*** FETCH USER INFO ***
+    //*** FETCH USER INFO------------------------------------------------------------ ***
     $userInfo = userProf($pdo);
 
     //*** SAVE VALUES FROM SUPERGLOBALS ***
@@ -31,7 +44,9 @@ if (! empty($_SESSION['currentUser']))
     $userThumb = $userInfo['thumbnail'];
     $secret = $userInfo['secret'];
 ?>
-<!-- EDIT MODAL -->
+
+
+<!--- EDIT MODAL -------------------------------------------------------------->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -53,12 +68,15 @@ if (! empty($_SESSION['currentUser']))
             </div>
         </div>
     </div>
-    
-<!-- AUTH MODAL -->
+
+
+
+<!-- AUTH MODAL -------------------------------------------------------------->
   <div class="modal fade" id="myAuth" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Google Authenticator</h4>
         </div>
         <div class="modal-body">
@@ -68,17 +86,17 @@ if (! empty($_SESSION['currentUser']))
           <form action="" method="POST">
             <input type="hidden" name="secret" value="<?php echo $authInfo[0]; ?>">
             <input type="password" name="code" maxlength="6">
-            <button class="btn btn-primary" type="submit" name="submitCode">GoogleAuth Code</button>
+            <button class="btn" type="submit" name="submitCode">GoogleAuth Code</button>
         </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
 
-<!-- DisAUTH MODAL -->
+<!-- DisAUTH MODAL -------------------------------------------------------------->
   <div class="modal fade" id="disAuth" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -88,6 +106,8 @@ if (! empty($_SESSION['currentUser']))
         </div>
         <div class="modal-body">
          <?php $authInfo = goAuthInit($ga);?>
+          <img src="<?php echo $authInfo[1]; ?>" alt="">
+          <p><?php echo $secret;  ?></p>
           <form action="" method="POST">
             <input type="hidden" name="secretDis" value="<?php echo $secret; ?>">
             <input type="password" name="code" maxlength="6">
@@ -100,32 +120,32 @@ if (! empty($_SESSION['currentUser']))
       </div>
     </div>
   </div>
-    
-<!-- COMMENT MODAL -->
-    <div class="modal fade" id="commModal" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Comment</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                
-                    <div class="modal-body">
-                        <!--<input type="hidden" id="authorId" name="author_Id" values=""> -->
-                           <!--  <input type="hidden" id="editId" name="postId" value="" /> -->
-                        <!-- <input type="text" id="" name="body" value="" maxlength="300"/> -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-info btn-lg" name="edit">Submit</button>
-                    </div>
-            </div>
+
+
+
+
+
+  <!-- Search Profile Modal -------------------------------------------------------------->
+    <div class="modal fade" id="searchProfile" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">View User Profile</h4>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
         </div>
-    </div>    
+      </div>
+    </div>
 
-    
 
 
-<!--Navigation bar-->
+<!--Navigation bar-------------------------------------------------------------->
 <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" id="nav-brand" href="#">Company<span style="color:Red">XYZ</span></a><br>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,13 +155,15 @@ if (! empty($_SESSION['currentUser']))
         <ul class="nav-pills navbar-nav" id="navbar-navv">
 
             <li class="nav-item">
-              <div class="input-group mb-3 searchform">
-                <input id="searchbar" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="searchbtn" type="sumbit" name="search" id="button-addon2"><img id="searchimg" src="images/search.png"/></button>
-                </div>
-              </div>
+              <form action="" method="POST" id='search-form'> <!---->
+                <input type="text" name="searchInput" id="searchbar">
+                    <button class="searchbtn" type="submit" name="searchUsers"> <!--id="SearchForm"-->
+                      <img id="searchimg" src="images/search.png"/>
+                    </button>
+              </form>
             </li>
+
+
 
             <form action="" method="post">
                 <li class="nav-item">
@@ -167,7 +189,7 @@ if (! empty($_SESSION['currentUser']))
 
 <div class="newsfeed container-fluid">
 <div class="row">
-  <div class="profile-container col">
+  <div class="profile-container col-md-2">
     <div class="profile-body">
       <div class="profile-img">
         <img src="<?php echo assignImage(); ?>" alt="ProfileImg">
@@ -177,20 +199,51 @@ if (! empty($_SESSION['currentUser']))
       </div>
         <h2 style="font-weight: bolder;"><?php echo $display_name ?></h2>
         <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3><br>
-        <?php 
+        <?php
             if(!$_SESSION['GoogleAuth'])
             {
         ?>
-        <button type="button" class="btn btn-primary show" data-toggle="modal" data-target="#myAuth">Enable GoogleAuth</button>
+        <button type="button" class="google-btn show" data-toggle="modal" data-target="#myAuth">Enable GoogleAuth</button>
         <?php }else{ ?>
-        <button type="button" class="btn btn-danger hidden" data-toggle="modal" data-target="#disAuth">Disable GoogleAuth</button>
+        <button type="button" class="google-btn hidden" data-toggle="modal" data-target="#disAuth">Disable GoogleAuth</button>
         <?php } ?>
 
     </div>
   </div>
 
-  <div class="col-8">
-  <!-- NEW POST FORM -->
+  <div class="col-md-8">
+
+
+
+    <!-- Search Result -------------------------------------------------------------->
+      <?php
+
+          $Display_User = array();
+          $Display_Role = array();
+            if(isset($_POST['searchUsers']))
+            {
+                    //$search = htmlspecialchars($_POST['searchInput'],ENT_COMPAT | ENT_XHTML,'utf-8');
+                    $search = $_POST['searchInput'];
+
+                    if(!empty($search)){
+                      $SU = SearchUser($pdo, $search);
+
+                      foreach ($SU as $row){
+                        $Display_User[] = $row['display_name'];
+                        $Display_Role = $row['employee_Id'];
+
+                        }
+                      }else{
+                        echo("Please type something ");
+                      }
+            }
+
+            print_r($Display_User);
+
+      ?>
+
+
+  <!-- NEW POST FORM -------------------------------------------------------------->
    <form action="" method="post">
         <div class="form-group" id="postStatus">
           <textarea placeholder="Drop Your Thoughts" class="form-control statusTA" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
@@ -201,7 +254,10 @@ if (! empty($_SESSION['currentUser']))
           <span id="maximum">/ 300</span>
         </div>
     </form>
-    <!--------TAB NAVIGATION ---------->
+
+
+
+    <!--TAB NAVIGATION ---------------------------------------------------------------------->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item tab">
             <a class="nav-link active" id="all-tab" data-toggle="" href="?filter=allPosts" role="" aria-controls="" aria-selected="" >All</a>
@@ -217,6 +273,8 @@ if (! empty($_SESSION['currentUser']))
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
+
+
           <!-- FILTERED TEMPLATES SECTION ----------------------------------------------->
           <?php
             $filter = "allPosts";
@@ -249,7 +307,7 @@ if (! empty($_SESSION['currentUser']))
                 <p class="card-text"><?php echo $row['body']; ?></p>
                 <div>
                   <button class="icon"><i class="fas fa-thumbs-up thumb"></i></button>
-                  <button class="icon comment" data-toggle="modal" data-target="#commModal" data-val="<?php echo $row['body']; ?>"><i class="fas fa-comment writecomment"></i></button>
+                  <button class="icon"><i class="fas fa-comment writecomment"></i></button>
                 </div>
                 <div class="card-comment">
                   <form action="" method="post">
@@ -259,7 +317,7 @@ if (! empty($_SESSION['currentUser']))
                        </div>
                    </form>
                 </div>
-                
+
               </div>
               <?php
                 //VALIDATE USER FOR ADMIN PERMISSIONS
@@ -285,10 +343,18 @@ if (! empty($_SESSION['currentUser']))
         </div>
 </div>
 
-  <div class="col">
+  <div class="col-md-2">
   </div>
 </div>
-
+</div>
+<div class="footer">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="dev-footer"
+      <h2>ThoughtDrop Developed with Love by Cameron & Jessica</h2>
+      </div>
+    </div>
+  </div>
 <script src="scripts/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

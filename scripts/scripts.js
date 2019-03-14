@@ -21,10 +21,10 @@ $(function() {
 		e.preventDefault();
 	});
 
-  $('.searchbtn').click(function(e) {
+  /*$('.searchbtn').click(function(e) {
     $("#searchbar").delay(100).fadeIn(200);
 
-  });
+  });*/
 
   $(".thumb").click(function(){
     $(this).toggleClass('like');
@@ -94,4 +94,14 @@ $(document).on("click", ".editModal", function () {
     $(".modal-body #editId").val( editId );
     $(".modal-body #editBody").val( editBody );
     $(".modal-body #authorId").val( editAuthor );
+});
+
+//** To open a Modal on after a "type= submit" form is sent.***
+
+
+
+
+$('#SearchForm').on('click', function(e){
+  $('#searchProfile').modal('show');
+  e.preventDefault();
 });

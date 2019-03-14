@@ -3,21 +3,55 @@
 }
 
 
-@media all and (max-width: 1280px) {
+@media all and (max-width: 1000px) {
+  .navbar{
+    height: 6em;
+    padding: 1em 2em;
+  }
+
+  .bgimage{
+    margin-top:110px;
+  }
+}
+
+
+@media all and (max-width: 850px) {
+  .profile-container.col-md-2 {
+      margin: 0 auto;
+      display: flex;
+  }
+
+}
+
+@media all and (max-width: 763px) {
+  .newsfeed{
+    padding-bottom: 70px;
+  }
+
+  .tab{
+    width: 25%;
+  }
+  .nav-tabs{
+    margin-top:50px;
+  }
 
 }
 
 
-@media all and (max-width: 980px) {
+@media all and (max-width: 500px) {
+  .dev-footer{
+    padding:10px 0 0 0;
+  }
+  #timestamp {
+      text-align: left;
+      font-size: .6em;
+      float: initial;
+      margin-left: 58px;
+      margin-top: -30px;
+  }
 
+  .loginpage{
+    margin-top:100px;
+  }
 
-}
-
-@media all and (max-width: 736px) {
-
-}
-
-
-@media all and (max-width: 480px) {
-  
  }
