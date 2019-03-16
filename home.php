@@ -1,5 +1,5 @@
 <?php
-require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php'; require 'Includes/search.php';
+require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php'; require 'Includes/search.php'; require 'Includes/likes.php'; 
 if (! empty($_SESSION['currentUser']))
 {
 ?>
@@ -22,8 +22,9 @@ if (! empty($_SESSION['currentUser']))
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto" rel="stylesheet">
+    
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
+    <script src="scripts/ajax.js"></script>
 
 
     <link rel="stylesheet" href="styles/main.css">
@@ -86,11 +87,11 @@ if (! empty($_SESSION['currentUser']))
           <form action="" method="POST">
             <input type="hidden" name="secret" value="<?php echo $authInfo[0]; ?>">
             <input type="password" name="code" maxlength="6">
-            <button class="btn" type="submit" name="submitCode">GoogleAuth Code</button>
+            <button class="google-btn" type="submit" name="submitCode">Enable GoogleAuth</button>
         </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn" data-dismiss="modal">Close</button>
+          <button type="button" class="google-btn" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -106,8 +107,6 @@ if (! empty($_SESSION['currentUser']))
         </div>
         <div class="modal-body">
          <?php $authInfo = goAuthInit($ga);?>
-          <img src="<?php echo $authInfo[1]; ?>" alt="">
-          <p><?php echo $secret;  ?></p>
           <form action="" method="POST">
             <input type="hidden" name="secretDis" value="<?php echo $secret; ?>">
             <input type="password" name="code" maxlength="6">
@@ -185,8 +184,8 @@ if (! empty($_SESSION['currentUser']))
         </div>
     </div>
 </section>
-<!---  Feed    ----------------------------------------------------------------->
 
+<!---  Feed    ----------------------------------------------------------------->
 <div class="newsfeed container-fluid">
 <div class="row">
   <div class="profile-container col-md-2">
@@ -195,17 +194,20 @@ if (! empty($_SESSION['currentUser']))
         <img src="<?php echo assignImage(); ?>" alt="ProfileImg">
         <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
           <!--data-id=<"<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" -->
-        </button></div>
+        </button>
+        </div>
       </div>
         <h2 style="font-weight: bolder;"><?php echo $display_name ?></h2>
         <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3><br>
+        <h6><i class="fas fa-thumbs-up thumb"></i>Likes:</h6><br>
+        <h6><i class="fas fa-comment writecomment"></i>Comments:</h6><br>
         <?php
             if(!$_SESSION['GoogleAuth'])
             {
         ?>
         <button type="button" class="google-btn show" data-toggle="modal" data-target="#myAuth">Enable GoogleAuth</button>
         <?php }else{ ?>
-        <button type="button" class="google-btn hidden" data-toggle="modal" data-target="#disAuth">Disable GoogleAuth</button>
+        <button type="button" class="google-btn hidden " data-toggle="modal" data-target="#disAuth">Disable GoogleAuth</button>
         <?php } ?>
 
     </div>
@@ -294,11 +296,11 @@ if (! empty($_SESSION['currentUser']))
             foreach ($rows as $row)
                 {
           ?>
-          <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <div class="card <?php echo postColor($row['author_Id']); ?>">
+          <div class="tab-pane fade show active posts" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div data-post-id="<?php echo $row['Id']; ?>" class="card post <?php echo postColor($row['author_Id']); ?>">
               <div class="card-body cardheader">
               <div id="cardheader row">
-                <h5 class="card-title"><img src="<?php echo assignImage(); ?>" alt="" style="width:50px; height:50px; border-radius: 10px;"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
+                <h5 class="card-title"><img src="<?php echo assignImage(); ?>" style="width:50px; height:50px; border-radius: 10px;"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
                 <p id="timestamp"><?php echo $row['timestamp'] ?></p>
               </div>
             </div>
@@ -306,8 +308,8 @@ if (! empty($_SESSION['currentUser']))
               <div class="card-body">
                 <p class="card-text"><?php echo $row['body']; ?></p>
                 <div>
-                  <button class="icon"><i class="fas fa-thumbs-up thumb"></i></button>
-                  <button class="icon"><i class="fas fa-comment writecomment"></i></button>
+                  <button class="icon likePost"><i class="fas fa-thumbs-up thumb likeCount"> <?php echo getLikes($pdo, $row['Id'] ); ?></i></button>
+                  <button class="icon commentPost"><i class="fas fa-comment writecomment"></i></button>
                 </div>
                 <div class="card-comment">
                   <form action="" method="post">
@@ -320,14 +322,16 @@ if (! empty($_SESSION['currentUser']))
 
               </div>
               <?php
-                //VALIDATE USER FOR ADMIN PERMISSIONS
+                
+//-------------- VALIDATE USER FOR ADMIN PERMISSIONS -------------------
                 $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
                 if($adminOptions || ($_SESSION['userRole'] == 127)){
                 ?>
               <div class="adminOpt">
-                  <!-- OPEN EDIT MODAL WINDOW -->
+              
+<!-------------- OPEN EDIT MODAL WINDOW -------------------------------->
                   <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><i class="fas fa-edit"></i></button>
-                 </button>
+                 
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
@@ -350,11 +354,12 @@ if (! empty($_SESSION['currentUser']))
 <div class="footer">
   <div class="container-fluid">
     <div class="row">
-      <div class="dev-footer"
+      <div class="dev-footer">
       <h2>ThoughtDrop Developed with Love by Cameron & Jessica</h2>
       </div>
     </div>
-  </div>
+</div>
+</div>
 <script src="scripts/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -362,5 +367,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop-master3/");
+   header("Location: http://localhost:8888/ThoughtDrop-masterCURRENT/");
 }
