@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6{
     font-family: 'Raleway', sans-serif;
 }
 
+button:focus {
+    outline: none!important;
+}
+
 /*-------------------------------------------------------NAV-----------------------------------------------------*/
 .navbar{
     transition: 0.4s;
