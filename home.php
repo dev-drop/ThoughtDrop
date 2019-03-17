@@ -1,5 +1,9 @@
 <?php
-require 'Includes/db.php'; require 'Includes/login.php'; require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php'; require 'Includes/search.php'; require 'Includes/likes.php'; 
+require 'Includes/db.php'; require 'Includes/login.php'; 
+require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php'; 
+require 'Includes/search.php'; require 'Includes/likes.php'; 
+require 'Includes/comments.php';
+
 if (! empty($_SESSION['currentUser']))
 {
 ?>
@@ -309,18 +313,9 @@ if (! empty($_SESSION['currentUser']))
                 <p class="card-text"><?php echo $row['body']; ?></p>
                 <div>
                   <button class="icon likePost"><i class="fas fa-thumbs-up thumb likeCount"> <?php echo getLikes($pdo, $row['Id'] ); ?></i></button>
-                  <button class="icon commentPost"><i class="fas fa-comment writecomment"></i></button>
-                </div>
-                <div class="card-comment">
-                  <form action="" method="post">
-                       <div class="form-group" id="postComment">
-                         <textarea placeholder="Write a Comment" class="form-control commentTA" name="postBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
-                         <button type="submit" class="btn statusTAsubmit" name="postContent"><img src="images/sendSM.png"/></button>
-                       </div>
-                   </form>
-                </div>
-
-              </div>
+                  <button class="icon commentPost"><i class="fas fa-comment writecomment"> <?php echo getCommentCount($pdo, $row['Id'] ); ?></i></button>
+                
+             
               <?php
                 
 //-------------- VALIDATE USER FOR ADMIN PERMISSIONS -------------------
@@ -338,7 +333,21 @@ if (! empty($_SESSION['currentUser']))
                         <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
                   </form>
               </div>
+              </div>
+              </div>
+<!-------------- COMMENTS & COMMENT FORM ----------------------------->
+             
               <?php } ?>
+              <div class="card-comment ">
+                 <div class="comments-body "></div>
+                  <form action="" method="post">
+                       <div class="form-group" id="postComment">
+                        <input type="hidden" name="post_Id" value="<?php echo $row['Id']; ?>">
+                         <textarea placeholder="Write a Comment" class="form-control commentTA" name="commentBody" maxlength="300" onkeyup="auto_grow(this)" row="1"></textarea>
+                         <button type="submit" class="btn statusTAsubmit" name="commentSubmit"><img src="images/sendSM.png"/></button>
+                       </div>
+                   </form>
+                </div>
             </div>
           </div>
           <?php

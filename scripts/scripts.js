@@ -28,12 +28,8 @@ $(function() {
 
   $(".thumb").click(function(){
     $(this).toggleClass('like');
-
   });
 
-  $(".writecomment").click(function(){
-    $(this,".card-comment").toggle('comment');
-  });
 
 
 

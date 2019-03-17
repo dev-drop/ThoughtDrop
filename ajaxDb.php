@@ -40,9 +40,8 @@ switch ($action)
         }
         break;
         
-    case 'getLikes':
+    case 'getComments':
         
-        // Required parament of PostID
         if(!isset($_GET['postId']))
             $json['error'] = "Post Id is required";
         else
@@ -52,11 +51,16 @@ switch ($action)
             $postId = $_GET['postId'];
             
             // Send Like to DB
-            $statement = $pdo->prepare('SELECT * FROM `likes` WHERE `post_Id` = ?');
+            $statement = $pdo->prepare('SELECT * FROM `comments` WHERE `post_Id` = ?');
             $statement->execute([$postId]);
             $result = $statement->fetchAll();
-            $count = count($result);
-            var_dump($count);
+            $json['comments'] = $result;
+            
+            $statement2 = $pdo->prepare('SELECT * FROM `comments` WHERE `post_Id` = ?');
+            $statement2->execute([$postId]);
+            $result2 = $statement2->fetchAll();
+            $count = count($result2);
+            $json['commentCount'] = $count;
             
                 
         }
