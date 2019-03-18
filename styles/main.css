@@ -224,7 +224,35 @@ input[type=text]:placeholder input[type=password]:placeholder{
   color: #cccccc;
 }
 
+/*--------------------------------------------------------MODAL STYLING------------------------------------------------*/
 
+.profImg{
+  width: 100px;
+  height:100px;
+  background-color: none!important;
+  position:relative;
+  overflow:hidden;
+  //margin: 0 auto;
+}
+
+.profImg>img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.profile {
+    display: flex;
+    padding: 0 50px 50px 50px;
+}
+
+.Pbody{
+  margin: 0 auto;
+}
+
+.profbod {
+    padding: 20px;
+}
 
 
 /*-------------------------------------------------------NEWS FEED-----------------------------------------------------*/
@@ -292,7 +320,13 @@ input[type=text]:placeholder input[type=password]:placeholder{
     color:#a6f7fb;
 }
 .writecomment:hover{
-   color:#a6f7fb; 
+   color:#a6f7fb;
+}
+
+.card-title>img{
+  border-radius:50%;
+  height:50px;
+  width:50px;
 }
 
 #postComment {
@@ -324,7 +358,7 @@ input[type=text]:placeholder input[type=password]:placeholder{
 
 .commentWrapper{
     border-top: 1px solid;
-    
+
 }
 
 .profile-body{
@@ -408,7 +442,7 @@ a{
 .cardheader-comment{
   background-color: white;
   margin: 0 2px 0 2px;
-  
+
 }
 
 .card-bottom{

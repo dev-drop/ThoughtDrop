@@ -1,8 +1,7 @@
 <?php
-require 'Includes/db.php'; require 'Includes/login.php'; 
-require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php'; 
-require 'Includes/search.php'; require 'Includes/likes.php'; 
-require 'Includes/comments.php';
+require 'Includes/db.php'; require 'Includes/login.php';
+require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php';
+require 'Includes/likes.php'; require 'Includes/comments.php';
 
 if (! empty($_SESSION['currentUser']))
 {
@@ -26,9 +25,10 @@ if (! empty($_SESSION['currentUser']))
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto" rel="stylesheet">
-    
+
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="scripts/ajax.js"></script>
+    <script type="text/javascript" src="scripts/app.js"></script>
 
 
     <link rel="stylesheet" href="styles/main.css">
@@ -130,14 +130,16 @@ if (! empty($_SESSION['currentUser']))
 
   <!-- Search Profile Modal -------------------------------------------------------------->
     <div class="modal fade" id="searchProfile" role="dialog">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">View User Profile</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body Pbody">
+            <div class="profileBody">
 
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -157,14 +159,15 @@ if (! empty($_SESSION['currentUser']))
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="nav-pills navbar-nav" id="navbar-navv">
 
-            <li class="nav-item">
-              <form action="" method="POST" id='search-form'> <!---->
-                <input type="text" name="searchInput" id="searchbar">
-                    <button class="searchbtn" type="submit" name="searchUsers"> <!--id="SearchForm"-->
-                      <img id="searchimg" src="images/search.png"/>
-                    </button>
-              </form>
-            </li>
+
+                      <li class="nav-item">
+                        <form action="" method="POST" id='searchform'> <!---->
+                          <input type="text" name="searchInput" id="searchbar">
+                              <button class="searchbtn" type="submit" name="searchUsers"> <!--id="SearchForm"-->
+                                <img id="searchimg" src="images/search.png"/>
+                              </button>
+                        </form>
+                      </li>
 
 
 
@@ -219,34 +222,6 @@ if (! empty($_SESSION['currentUser']))
 
   <div class="col-md-8">
 
-
-
-    <!-- Search Result -------------------------------------------------------------->
-      <?php
-
-          $Display_User = array();
-          $Display_Role = array();
-            if(isset($_POST['searchUsers']))
-            {
-                    //$search = htmlspecialchars($_POST['searchInput'],ENT_COMPAT | ENT_XHTML,'utf-8');
-                    $search = $_POST['searchInput'];
-
-                    if(!empty($search)){
-                      $SU = SearchUser($pdo, $search);
-
-                      foreach ($SU as $row){
-                        $Display_User[] = $row['display_name'];
-                        $Display_Role = $row['employee_Id'];
-
-                        }
-                      }else{
-                        echo("Please type something ");
-                      }
-            }
-
-            print_r($Display_User);
-
-      ?>
 
 
   <!-- NEW POST FORM -------------------------------------------------------------->
@@ -304,7 +279,7 @@ if (! empty($_SESSION['currentUser']))
             <div data-post-id="<?php echo $row['Id']; ?>" class="card post <?php echo postColor($row['author_Id']); ?>">
               <div class="card-body cardheader">
               <div id="cardheader row">
-                <h5 class="card-title"><img src="<?php echo assignImage(); ?>" style="width:50px; height:50px; border-radius: 10px;"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
+                <h5 class="card-title"><img src="<?php echo assignImage(); ?>"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
                 <p id="timestamp"><?php echo $row['timestamp'] ?></p>
               </div>
             </div>
@@ -314,19 +289,19 @@ if (! empty($_SESSION['currentUser']))
                 <div>
                   <button class="icon likePost"><i class="fas fa-thumbs-up thumb likeCount"> <?php echo getLikes($pdo, $row['Id'] ); ?></i></button>
                   <button class="icon commentPost"><i class="fas fa-comment writecomment"> <?php echo getCommentCount($pdo, $row['Id'] ); ?></i></button>
-                
-             
+
+
               <?php
-                
+
 //-------------- VALIDATE USER FOR ADMIN PERMISSIONS -------------------
                 $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
                 if($adminOptions || ($_SESSION['userRole'] == 127)){
                 ?>
               <div class="adminOpt">
-              
-<!-------------- OPEN EDIT MODAL WINDOW -------------------------------->
+
+<!--- OPEN EDIT MODAL WINDOW -------------------------------->
                   <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><i class="fas fa-edit"></i></button>
-                 
+
                   <!-- DELETE POST FORM -->
                   <form action="" class="deleteForm" method="post">
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
@@ -335,8 +310,8 @@ if (! empty($_SESSION['currentUser']))
               </div>
               </div>
               </div>
-<!-------------- COMMENTS & COMMENT FORM ----------------------------->
-             
+<!-- COMMENTS & COMMENT FORM ----------------------------->
+
               <?php } ?>
               <div class="card-comment ">
                  <div class="comments-body "></div>
@@ -376,5 +351,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop-masterCURRENT/");
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.7/");
 }

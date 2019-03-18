@@ -94,10 +94,7 @@ $(document).on("click", ".editModal", function () {
 
 //** To open a Modal on after a "type= submit" form is sent.***
 
-
-
-
-$('#SearchForm').on('click', function(e){
+$('#searchform').on('submit', function(e){
   $('#searchProfile').modal('show');
   e.preventDefault();
 });
