@@ -165,9 +165,17 @@ function displayName($pdo, $author)
         return $result['display_name'];
     }else{
         return $result['employee_Id'];
-    }
-   
+    }  
+}
+
+//**** USERPROFILE IMAGES
+function assignImage($pdo, $id){
     
+    $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
+    $statement->execute([$id]);
+    $result = $statement->fetch();
+    $image = $result['thumbnail'];
+    return $image;
 }
 
 //**** CHECK USER FOR POST MATCHES. ENABLE EDITING PERMISSIONS ****

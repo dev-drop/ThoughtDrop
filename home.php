@@ -2,6 +2,7 @@
 require 'Includes/db.php'; require 'Includes/login.php';
 require 'Includes/posts.php'; require 'Includes/EnableGoogleAuth.php';
 require 'Includes/likes.php'; require 'Includes/comments.php';
+require 'Includes/upload.php';
 
 if (! empty($_SESSION['currentUser']))
 {
@@ -73,6 +74,25 @@ if (! empty($_SESSION['currentUser']))
             </div>
         </div>
     </div>
+
+<!--- UPLOAD IMAGE MODAL -------------------------------------------------------------->
+    <div class="modal fade" id="uploadModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Image</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                 
+                <form action="" method="post" enctype="multipart/form-data">
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" value="Upload Image" name="submitImage">
+                </form>
+                
+            </div>
+        </div>
+    </div>        
 
 
 
@@ -198,9 +218,9 @@ if (! empty($_SESSION['currentUser']))
   <div class="profile-container col-md-2">
     <div class="profile-body">
       <div class="profile-img">
-        <img src="<?php echo assignImage(); ?>" alt="ProfileImg">
-        <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="/#myModal" ><i class="fas fa-camera-retro"></i>
-          <!--data-id=<"<?php echo $row['Id']; ?>" data-val="<?php echo $row['body']; ?>" -->
+        <img src="<?php echo $userThumb ?>" alt="ProfileImg">
+        <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="#uploadModal" ><i class="fas fa-camera-retro"></i>
+          
         </button>
         </div>
       </div>
@@ -279,7 +299,7 @@ if (! empty($_SESSION['currentUser']))
             <div data-post-id="<?php echo $row['Id']; ?>" class="card post <?php echo postColor($row['author_Id']); ?>">
               <div class="card-body cardheader">
               <div id="cardheader row">
-                <h5 class="card-title"><img src="<?php echo assignImage(); ?>"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
+                <h5 class="card-title"><img src="<?php echo assignImage($pdo, $row['author_Id']); ?>"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
                 <p id="timestamp"><?php echo $row['timestamp'] ?></p>
               </div>
             </div>
@@ -299,7 +319,7 @@ if (! empty($_SESSION['currentUser']))
                 ?>
               <div class="adminOpt">
 
-<!--- OPEN EDIT MODAL WINDOW -------------------------------->
+<!-------------- OPEN EDIT MODAL WINDOW -------------------------------->
                   <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><i class="fas fa-edit"></i></button>
 
                   <!-- DELETE POST FORM -->
@@ -308,11 +328,11 @@ if (! empty($_SESSION['currentUser']))
                         <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
                   </form>
               </div>
-              </div>
-              </div>
+            
 <!-- COMMENTS & COMMENT FORM ----------------------------->
-
               <?php } ?>
+              </div>
+        </div>
               <div class="card-comment ">
                  <div class="comments-body "></div>
                   <form action="" method="post">
@@ -351,5 +371,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.7/");
+   header("Location: http://localhost:8888/ThoughtDrop-master5/");
 }

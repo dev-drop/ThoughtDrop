@@ -11,10 +11,6 @@ session_start();
 
 //**** REGISTRATION *****
 if(isset($_POST['register'])){
-
-    //SECRET CODE GENERATOR
-    //$secret = $ga->createSecret();
-    //$qrCodeUrl = $ga->getQRCodeGoogleUrl('ThoughtDropv1', $secret);
     
     //FORM INPUT FIELDS
     $employee_Id = $_POST['employee_Id'];
@@ -36,7 +32,7 @@ if(isset($_POST['register'])){
             $_SESSION['currentUser'] = $employee_Id;
             $_SESSION['userRole'] = 10;
             $_SESSION['GoogleAuth'] = false;
-            header("Location: http://localhost:8888/ThoughtDrop-masterCURRENT/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop-master5/home.php");
             //exit();
         }else{
             //Echo "Sorry, There is already a user by that Name";
@@ -91,7 +87,7 @@ if(isset($_POST['login'])){
                     //TO:DO SOMETHING HERE WHEN VERIFIED
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
-                    header("Location: http://localhost:8888/ThoughtDrop-masterCURRENT/home.php");
+                    header("Location: http://localhost:8888/ThoughtDrop-master5/home.php");
                     exit();
                 }
             }
@@ -105,22 +101,11 @@ if(isset($_POST['login'])){
                     //TO:DO SOMETHING HERE WHEN VERIFIED
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
-                    header("Location: http://localhost:8888/ThoughtDrop-masterCURRENT/home.php");
+                    header("Location: http://localhost:8888/ThoughtDrop-master5/home.php");
                     exit();
                 }
             
         }
-    }
-}
-
-//**** USERPROFILE
-function assignImage(){
-    if($_SESSION['userRole'] == 127){
-        $admin = "images/ADMIN.jpg";
-        return $admin;
-    }else{
-        $other = "images/cartoonlady.jpeg";
-        return $other;
     }
 }
 
@@ -130,7 +115,7 @@ if(isset($_POST['logout'])){
     //TODO : LOGOUT FUNCTION
     Unset($_SESSION['currentUser']);
     Unset($_SESSION['GoogleAuth']);
-    header("Location: http://localhost:8888/ThoughtDrop-masterCURRENT/");
+    header("Location: http://localhost:8888/ThoughtDrop-master5/");
     exit();
 }
 
