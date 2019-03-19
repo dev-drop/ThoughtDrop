@@ -24,7 +24,7 @@ switch ($action)
             $currentUser = $_SESSION['currentUser'];
 
             // Send Like to DB
-            $statement = $pdo->prepare('INSERT INTO `likes` (`post_Id`, `employee_Id`) VALUES (?, ?)');
+            $statement = $pdo->prepare('INSERT IGNORE INTO `likes` (`post_Id`, `employee_Id`) VALUES (?, ?)');
             $statement->execute([$postId, $currentUser]);
             
             
@@ -32,11 +32,32 @@ switch ($action)
             $statement2->execute([$postId]);
             $result = $statement2->fetchAll();
             $count = count($result);
-            $json['likes'] = $count;
+            $json['likes'] = $count;    
+        }
+        break;
+        
+    case 'likeComment':
+        
+        // Required parameter of PostID
+        if(!isset($_GET['commentId']))
+            $json['error'] = "Comment Id is required";
+        else
+        {
+            
+            $json['status'] = 'Success';
+            $commentId = $_GET['commentId'];
+            $currentUser = $_SESSION['currentUser'];
+
+            $statement = $pdo->prepare('INSERT IGNORE INTO `commentLikes` (`comment_Id`, `employee_Id`) VALUES (?, ?)');
+            $statement->execute([$commentId, $currentUser]);
             
             
-            
-                
+            $statement2 = $pdo->prepare('SELECT * FROM `commentLikes` WHERE `comment_Id` = ?');
+            $statement2->execute([$commentId]);
+            $result = $statement2->fetchAll();
+            $count = count($result);
+            $json['commentLikes'] = $count;
+                    
         }
         break;
         

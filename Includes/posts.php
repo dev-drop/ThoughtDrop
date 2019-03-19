@@ -168,7 +168,7 @@ function displayName($pdo, $author)
     }  
 }
 
-//**** USERPROFILE IMAGES
+//**** USERPROFILE Images
 function assignImage($pdo, $id){
     
     $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');

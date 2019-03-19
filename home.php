@@ -327,8 +327,7 @@ if (! empty($_SESSION['currentUser']))
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
                         <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
                   </form>
-              </div>
-            
+              </div>            
 <!-- COMMENTS & COMMENT FORM ----------------------------->
               <?php } ?>
               </div>
@@ -350,6 +349,8 @@ if (! empty($_SESSION['currentUser']))
           ?>
         </div>
 </div>
+  
+    
 
   <div class="col-md-2">
   </div>
