@@ -23,11 +23,13 @@ if (! empty($_SESSION['currentUser']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThoughtDrop</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto" rel="stylesheet">
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
     <script src="scripts/ajax.js"></script>
     <script type="text/javascript" src="scripts/app.js"></script>
 
@@ -83,16 +85,16 @@ if (! empty($_SESSION['currentUser']))
                 <div class="modal-header">
                     <h4 class="modal-title">Upload Image</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                 
+
                 <form action="" method="post" enctype="multipart/form-data">
                     Select image to upload:
                     <input type="file" name="fileToUpload" id="fileToUpload">
                     <input type="submit" value="Upload Image" name="submitImage">
                 </form>
-                
+
             </div>
         </div>
-    </div>        
+    </div>
 
 
 
@@ -220,7 +222,7 @@ if (! empty($_SESSION['currentUser']))
       <div class="profile-img">
         <img src="<?php echo $userThumb ?>" alt="ProfileImg">
         <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="#uploadModal" ><i class="fas fa-camera-retro"></i>
-          
+
         </button>
         </div>
       </div>
@@ -327,7 +329,8 @@ if (! empty($_SESSION['currentUser']))
                         <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
                         <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
                   </form>
-              </div>            
+              </div>
+
 <!-- COMMENTS & COMMENT FORM ----------------------------->
               <?php } ?>
               </div>
@@ -349,8 +352,6 @@ if (! empty($_SESSION['currentUser']))
           ?>
         </div>
 </div>
-  
-    
 
   <div class="col-md-2">
   </div>
@@ -372,5 +373,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop-master5/");
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.8/");
 }
