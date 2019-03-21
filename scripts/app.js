@@ -8,6 +8,7 @@
     var $this = $(this);
     var $search = $('form#searchform');
     var $profile_field = $('div.profileBody',$this);
+    var availableNames = [];
 		$search.submit(function()
 		{
 
@@ -34,23 +35,20 @@
                 							{
                 							var userProf = response.users[index];
                 							var $userProf = $('<div class="profile">');
-                              var $Upic = $('<div class="profImg"><img src="images/cartoonlady.jpeg" alt="ProfileImg">');
+                              var $picbod = $('<div class="profImg">')
                               var $Profbod = $('<div class="profbod">');
                 							var $Uname = $('<div class="userName">');
                               var $Uid = $('<div class="userId">');
+                              var $Upic = $('<img src=""/>');
                 							$Uname.text(userProf.display_name);
                 							$Uid.text(userProf.employee_Id);
-                              $Profbod.append($Uname).append($Uid)
-                							$userProf.append($Upic).append($Profbod);
+                              $Upic.attr("src",userProf.thumbnail);
+                              $Profbod.append($Uname).append($Uid);
+                              $picbod.append($Upic);
+                							$userProf.append($picbod).append($Profbod);
                 							$profile_field.append($userProf);
                 							}
-                          // var availableNames = [
-                          //         response.users.display_name,
-                          //         response.users.employee_Id
-                          //         ];
-                          //         $( "#searchbar" ).autocomplete({
-                          //           source: availableNames
-                          //         });
+
 
               }else{
                console.log("response error");
@@ -67,7 +65,13 @@
       });
 
 //AUTOCOMPLETE
-
+// var availableNames = [
+//         response.users.display_name,
+//         response.users.employee_Id
+//         ];
+//         $( "#searchbar" ).autocomplete({
+//           source: availableNames
+//         });
 
 
 
