@@ -92,10 +92,11 @@ if(isset($_POST['postContent']))
         $date = new DateTime();
         $timeStamp = $date->format('Y-m-d H:i:s');
         $postBody = htmlspecialchars($_POST['postBody'],ENT_COMPAT | ENT_XHTML,'utf-8');
-        if(!$postBody==""){
+        $cusfree = wordFilter($postBody);
+        if(!$cusfree==""){
             //POST TO DB
             $statement = $pdo->prepare('INSERT INTO `posts` (`author_Id`, `timestamp`, `body`) VALUES (?, ?, ?)');
-            $statement->execute([$authorId, $timeStamp, $postBody]);
+            $statement->execute([$authorId, $timeStamp, $cusfree]);
         }else{
 
             return;
@@ -121,16 +122,17 @@ if(isset($_POST['edit']))
     $postId = $_POST['postId'];
     $authorId = $_POST['author_Id'];
     $newBody = htmlspecialchars($_POST['body'],ENT_COMPAT | ENT_XHTML,'utf-8');;
+    $cusfree = wordFilter($newBody);
 
-    if(!$newBody ==""){
-        
+    if(!$cusfree ==""){
+
         if($_SESSION['userRole'] == 127 || $currentUser == $authorId){
             $statement = $pdo->prepare('UPDATE `posts` SET `body` = ? WHERE `Id` = ? AND `author_Id` = ?');
-            $statement->execute([$newBody, $postId, $authorId]);
+            $statement->execute([$cusfree, $postId, $authorId]);
         }else{
             return;
         }
-      
+
     }else{
         $message = "The post body cannot be left empty";
         echo "<script type='text/javascript'>alert('$message');</script>";
@@ -143,7 +145,7 @@ function postColor($author)
     $RD = "rd";
     $MS = "ms";
     $admin = "admin";
-    
+
     $firstCharacter = $author[0];
     switch($firstCharacter){
         case "A": return $admin;
@@ -151,7 +153,7 @@ function postColor($author)
         case "R": return $RD;
             break;
         case "M": return $MS;
-            break;         
+            break;
     }
 }
 
@@ -165,12 +167,12 @@ function displayName($pdo, $author)
         return $result['display_name'];
     }else{
         return $result['employee_Id'];
-    }  
+    }
 }
 
-//**** USERPROFILE Images
+//**** USERPROFILE IMAGES
 function assignImage($pdo, $id){
-    
+
     $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
     $statement->execute([$id]);
     $result = $statement->fetch();
@@ -187,6 +189,43 @@ function validate_permissions($currentUser, $Author)
         }else{
             return false;
         }
+    }
+
+
+    function wordFilter($text)
+    {
+        $filter_terms = array('\bass(es|holes?)?\b', '\bshit(e|ted|ting|ty|head)\b', 'anal','anus','arse','assface','asslick','asswipe',
+    		'ballsack','bastard','biatch','bitch','blowjob','bollock','bollok','boob','bugger','bum','butt','butthole','buttcam','buttplug','buttwipe','buttfucking','buttfuck','barely legal','bdsm','bbw','bimbo','bukkake',
+    		'clit','clitoris','cock','cockhead','cocksucker','coon','crap','cunt','cum','cumshot','cumming',
+    		'damn','dick','dickhead','dildo','dyke','deepthroat','defloration','doggystyle','dp',
+    		'ejaculation',
+    		'fag','fatass','fck','fellate','fellatio','felching','fuck','fucker','fuckface','fudgepacker','fucked','fisting','fingering','foreplay','foursome',
+    		'gayboy','gaygirl','goddamn','gagged','gloryhole','golden shower','gilf',
+    		'homo','handjob','hymen','huge toy','hooter',
+    		'jackoff','jap','jizz',
+    		'knob','knobend','knobjockey','knocker',
+    		'labia','lactating','ladyboy',
+    		'masterbate','masturbate','mofo','muff','milf','muff dive','muff diving',
+    		'nigga','nigger','nipple',
+    		'orgy',
+    		'paki','penis','piss','pisstake','poop','porn','prick','pube','pussy','pornstar','porn star','porno','pornographic','pissing',
+    		'rectum','retard',
+    		'schlong','scrotum','sex','shit','shithead','shyte','slut','spunk','shitting','sperm','strap on','stripper','speculum','sybian',
+    		'tit','tits','tosser','turd','twat','threesome','topless','titty',
+    		'vagina',
+    		'whore','wank','wanker','whoar'
+      );
+        $filtered_text = $text;
+        foreach($filter_terms as $word)
+        {
+            $match_count = preg_match_all('/' . $word . '/i', $text, $matches);
+            for($i = 0; $i < $match_count; $i++)
+                {
+                    $bwstr = trim($matches[0][$i]);
+                    $filtered_text = preg_replace('/\b' . $bwstr . '\b/', str_repeat("*", strlen($bwstr)), $filtered_text);
+                }
+        }
+        return $filtered_text;
     }
 
 ?>
