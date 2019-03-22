@@ -19,7 +19,6 @@
             var $comment_button = $('button.commentPost', $this);
 
             var $userName = $('.seeUser', $this);
-            var $profile_field = $('div.profileBody',$this);
 
             $userName.on('click', function()
                 {
@@ -33,11 +32,20 @@
                             {
                                 $('#selUserName').html(response.userInfo.display_name);
                                 $('#selUserId').html(response.userInfo.employee_Id);
+                                $('#selUserLikes').html("Likes: " + response.likeCount);
+                                $('#selUserComments').html("Comments: " +response.commentCount);
+                                console.log(response.commentCount);
+                                console.log(response.likeCount);
+
+                                console.log(response.userInfo.thumbnail);
                                 if(!response.userInfo.thumbnail == ""){
                                     $('#selUserImg').attr("src", response.userInfo.thumbnail);
                                 }else{
                                     $('#selUserImg').attr("src", "images/defaultAvatar.png");
                                 }
+                                console.log("success");
+                                console.log(response);
+                                
                                 var $adminCrl = '';
                                 //console.log(mySession);
                                 if(mySession == 127){
@@ -54,18 +62,16 @@
                                     return confirm("Are you sure you want to delete this user from the database?");
                                     });
                                   }
-
-                                console.log("success");
-                                console.log(response);
+                                
                             }else
                                 {
                                 Console.log("something went wrong");
-                                //console.log(response);
+                                console.log(response);
                                 }
                         },
                         error: function(response){
                             console.error('Something went wrong');
-                            //console.log(response);
+                            console.log(response);
                         }
                     })
                 })
@@ -82,16 +88,16 @@
                             {
                                 $postLikes.html(" " + response.likes);
                                 console.log("success");
-                                //console.log(response);
+                                console.log(response);
                             }else
                                 {
                                 Console.log("something went wrong");
-                                //console.log(response);
+                                console.log(response);
                                 }
                         },
                         error: function(response){
                             console.error('Something went wrong');
-                            //console.log(response);
+                            console.log(response);
                         }
                     })
 
@@ -110,27 +116,27 @@
                         {
                             if(response.status === "Success")
                             {
-
+                                
                                 console.log("success");
-                                //console.log(response);
+                                console.log(response);
                                 for(var i = 0; i<response.comments.length; i++){
 
-                                commentHtml += `<div class="commentWrapper"><div class='cardheader-comment'><div id='cardheader row'><h5 class='card-title'>${response.comments[i].author_Id}</h5><p id='timestamp'>${response.comments[i].timestamp}</p></div></div><div class='.card-body-comment'><p class='card-text'>${response.comments[i].body}</p>`
+                                commentHtml += `<div class="commentWrapper"><div class='cardheader-comment'><div id='cardheader row'><h5 class='card-title'>${response.comments[i].author_Id}</h5><p id='timestamp'>${response.comments[i].timestamp}</p></div></div><div class='.card-body-comment'><p class='card-text'>${response.comments[i].body}</p>`           
                                 }
                                 $('.comments-body', $this).html(commentHtml);
 
                             }else
                                 {
                                 Console.log("something went wrong");
-                                //console.log(response);
+                                console.log(response);
                                 }
                         },
                         error: function(response){
                             console.error('Something went wrong');
-                            //console.log(response);
+                            console.log(response);
                         }
                     })
-                    //console.log('Comment On Post: ' + postId);
+                    console.log('Comment On Post: ' + postId);
                 })
             })
     }

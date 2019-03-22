@@ -8,6 +8,7 @@
     var $search = $('form#searchform');
     var $profile_field = $('div.profileBody',$this);
     var availableNames = [];
+    console.log(mySession);
 		$search.submit(function()
 		{
 
