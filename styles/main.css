@@ -16,6 +16,10 @@ h1, h2, h3, h4, h5, h6{
     padding-top: 1.5em;
 }
 
+.navbar-collapse {
+    background-color: #a2d5f7;
+    text-align: center;
+}
 
 .bg-light{
   background-color: #a2d5f7!important;
@@ -36,10 +40,6 @@ button:focus {
 }
 
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
-    background-color: transparent;
-
-}
 
 #searchimg{
   width: 25px;
@@ -584,7 +584,7 @@ a{
 }
 
 .footer{
-  height: 100px;
+  height: auto;
   background-color: white;
   color:#a2d5f7;
 }

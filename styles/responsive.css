@@ -2,8 +2,22 @@
 
 }
 
+@media all and (max-width: 1300px) {
+  .col-md-2, .col-md-8 {
+      padding: 0;
+  }
+}
 
-@media all and (max-width: 1000px) {
+@media all and (max-width: 1200px) {
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  button.google-btn {
+      padding: 5px 8px;
+  }
+
   .navbar{
     height: 6em;
     padding: 1em 2em;
@@ -13,6 +27,7 @@
     margin-top:110px;
   }
 }
+
 
 
 @media all and (max-width: 850px) {
@@ -33,6 +48,10 @@
   }
   .nav-tabs{
     margin-top:50px;
+  }
+
+  .col-md-8 {
+      padding: 20px;
   }
 
 }
