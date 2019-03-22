@@ -100,7 +100,26 @@ if (! empty($_SESSION['currentUser']))
         </div>
     </div>
 
-
+<!--- PROFILE PAGE MODAL -------------------------------------------------------------->
+    <div class="modal fade" id="profileModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="profile-body">
+                  <div class="profile-img">
+                    <img id="selUserImg" src="" alt="ProfileImg">
+                  </div>
+                    <h2 style="font-weight: bolder;" id="selUserName">USER NAME</h2>
+                    <h3 style="font-weight: 100;" id="selUserId">USER ID</h3><br>
+                    <h6><i class="fas fa-thumbs-up thumb"></i>Likes:</h6><br>
+                    <h6><i class="fas fa-comment writecomment"></i>Comments:</h6><br>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <!-- AUTH MODAL -------------------------------------------------------------->
   <div class="modal fade" id="myAuth" role="dialog">
@@ -306,10 +325,12 @@ if (! empty($_SESSION['currentUser']))
                 {
           ?>
           <div class="tab-pane fade show active posts" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <div data-post-id="<?php echo $row['Id']; ?>" class="card post <?php echo postColor($row['author_Id']); ?>">
+            <div data-post-id="<?php echo $row['Id']; ?>" data-author="<?php echo $row['author_Id']; ?>" class="card post <?php echo postColor($row['author_Id']); ?>">
               <div class="card-body cardheader">
               <div id="cardheader row">
-                <h5 class="card-title"><img src="<?php echo assignImage($pdo, $row['author_Id']); ?>"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
+               <div class="seeUser" data-toggle="modal" data-target="#profileModal">
+                   <h5 class="card-title"><img src="<?php echo assignImage($pdo, $row['author_Id']); ?>"> <?php echo displayName($pdo, $row['author_Id']); ?></h5>
+                </div>
                 <p id="timestamp"><?php echo $row['timestamp'] ?></p>
               </div>
             </div>
@@ -378,5 +399,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.8/");
+   header("Location: http://localhost:8888/ThoughtDrop-master1.2/");
 }

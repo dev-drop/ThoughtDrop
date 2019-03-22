@@ -10,6 +10,7 @@
         
             var $this = $(this);
             var postId =  parseInt($this.data('post-id'));
+            var userId = $this.data('author');
             
             var $postLikes = $('i.likeCount', $this);
             var $postComment = $('div.card-comment', $this);
@@ -17,6 +18,35 @@
             var $like_button = $('button.likePost', $this);
             var $comment_button = $('button.commentPost', $this);
         
+            var $userName = $('.seeUser', $this);
+            
+            $userName.on('click', function()
+                {
+                
+                    var getUser = $.ajax({
+                        url: 'ajaxDb.php?action=seeUser&empId=' + userId,
+                        dataType: 'json',
+                        success: function(response)
+                        {
+                            if(response.status === "Success")
+                            {
+                                $('#selUserName').html(response.userInfo.display_name);
+                                $('#selUserId').html(response.userInfo.employee_Id);
+                                $('#selUserImg').attr("src", response.userInfo.thumbnail);
+                                console.log("success");
+                                console.log(response);
+                            }else
+                                {
+                                Console.log("something went wrong");    
+                                console.log(response);    
+                                }
+                        },
+                        error: function(response){
+                            console.error('Something went wrong');
+                            console.log(response);
+                        }
+                    })
+                })
             
             $like_button.on('click', function()
                 {
@@ -87,42 +117,5 @@
     
 })(window.jQuery);
 
-var commentHtml = "<div class='card-body cardheader'><div id='cardheader row'><h5 class='card-title'>/*AUTHOR ID */</h5><p id='timestamp'>/*TIMESTAMP*/</p></div></div><div class='card-body'><p class='card-text'>/*COMMENT BODY*/</p><div><button class='icon likePost'><i class='fas fa-thumbs-up thumb likeCount'>/* COMMENT LIKES*/</i></button>";
 
-
-
-
-/*
-'<div class="card-body cardheader">
-              <div id="cardheader row">
-                <h5 class="card-title">response.comment[i].author_Id</h5>
-                <p id="timestamp">/*TIMESTAMP</p>
-              </div>
-            </div>
-
-              <div class="card-body">
-                <p class="card-text">/*COMMENT BODY</p>
-                <div>
-                  <button class="icon likePost"><i class="fas fa-thumbs-up thumb likeCount">/* COMMENT LIKES</i></button>'
-                  
-              <?php
-                
-//-------------- VALIDATE USER FOR ADMIN PERMISSIONS -------------------
-                $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
-                if($adminOptions || ($_SESSION['userRole'] == 127)){
-                ?>
-              <div class="adminOpt">
-              
-<!-------------- OPEN EDIT MODAL WINDOW -------------------------------->
-                  <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><i class="fas fa-edit"></i></button>
-                 
-                  <!-- DELETE POST FORM -->
-                  <form action="" class="deleteForm" method="post">
-                        <input type="hidden" name="postId" value="<?php echo $row['Id']; ?>" />
-                        <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
-                  </form>
-              </div>
-              </div>
-              </div>'
-*/
  
