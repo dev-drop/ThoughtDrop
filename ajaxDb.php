@@ -100,23 +100,6 @@ switch ($action)
             $statement->execute([$empId]);
             $result = $statement->fetch();
             $json['userInfo'] = $result;
-            
-            // Get Comment Count
-            $statement2 = $pdo->prepare('SELECT * FROM `comments` WHERE `author_Id` = ?');
-            $statement2->execute([$empId]);
-            $result2 = $statement2->fetchAll();
-            $count2 = count($result2);
-            $json['commentCount'] = $count2;
-            
-            
-            // Get Like Count
-            $statement3 = $pdo->prepare('SELECT * FROM `likes` WHERE `employee_Id` = ?');
-            $statement3->execute([$empId]);
-            $result3 = $statement3->fetchAll();
-            $count3 = count($result3);
-            $json['likeCount'] = $count3;   
-            
-            
                     
         }
         break;

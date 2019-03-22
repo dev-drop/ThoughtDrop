@@ -31,8 +31,8 @@ if (! empty($_SESSION['currentUser']))
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
-    <script src="scripts/ajax.js"></script>
     <script>var mySession ='<?php echo $_SESSION['userRole'];?>';</script>
+    <script src="scripts/ajax.js"></script>
     <script type="text/javascript" src="scripts/app.js"></script>
 
 
@@ -142,8 +142,9 @@ if (! empty($_SESSION['currentUser']))
                   </div>
                     <h2 style="font-weight: bolder;" id="selUserName">USER NAME</h2>
                     <h3 style="font-weight: 100;" id="selUserId">USER ID</h3><br>
-                    <h6><i class="fas fa-thumbs-up" id="selUserLikes"></i></h6><br>
-                    <h6><i class="fas fa-comment" id="selUserComments"></i></h6><br>
+                    <h6><i class="fas fa-thumbs-up"></i>Likes:</h6><br>
+                    <h6><i class="fas fa-comment"></i>Comments:</h6><br>
+                    <div id="adminPermis"></div>
                 </div>
             </div>
         </div>
@@ -287,9 +288,9 @@ if (! empty($_SESSION['currentUser']))
             <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3>
         </div>
         <br>
-        <h6><i class="fas fa-thumbs-up "></i>Likes: <?php echo userLikes($pdo, $employee_id); ?></h6><br>
-        <h6><i class="fas fa-comment "></i>Comments: <?php echo userComments($pdo, $employee_id); ?></h6><br>
-    
+        <h6><i class="fas fa-thumbs-up "></i>Likes:</h6><br>
+        <h6><i class="fas fa-comment "></i>Comments:</h6><br>
+
         <?php
             if(!$_SESSION['GoogleAuth'])
             {
@@ -433,8 +434,8 @@ if (! empty($_SESSION['currentUser']))
 <?php
 }else{
 
-  
 
-   header("Location: http://localhost:8888/ThoughtDrop-master1.4/");
+
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV2.0/");
 
 }
