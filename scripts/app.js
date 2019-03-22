@@ -41,8 +41,9 @@
                 							var $Uname = $('<div class="userName">');
                               var $Uid = $('<div class="userId">');
                               var $Upic = $('<img src=""/>');
+                              var $adminCrl = '';
                               if(mySession == 127){
-                                var $adminCrl = $('<form action="" class="deleteUser" method="post">');
+                                $adminCrl = $('<form action="" class="deleteUser" method="post">');
                                 $adminCrl.append('<input type="hidden" name="employeeId" id="hiddenValue" value="' + userProf.employee_Id + '">');
                                 $adminCrl.append('<button class="icon"  type="submit" name="deleteUser"><i class="fas fa-user-slash"></i></button>');
                               }
@@ -50,6 +51,14 @@
                 							$Uid.text(userProf.employee_Id);
                               $Upic.attr("src",userProf.thumbnail);
                               $Profbod.append($Uname).append($Uid).append($adminCrl);
+                              if ($adminCrl)
+                                {
+                                var $admin_form = $('.deleteUser',$Profbod);
+                                $admin_form.on('submit',function()
+                                  {
+                                  return confirm("Are you sure you want to delete this user from the database?");
+                                  });
+                                }
                               $picbod.append($Upic);
                 							$userProf.append($picbod).append($Profbod);
                 							$profile_field.append($userProf);
