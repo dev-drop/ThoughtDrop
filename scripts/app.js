@@ -34,15 +34,20 @@
                 for (var index = 0 ; index < response.users.length ; ++index)
                 							{
                 							var userProf = response.users[index];
+                                                
+                                                if(!userProf.thumbnail){
+                                                    userProf.thumbnail = "images/defaultAvatar.png";
+                                                }
+                                                
                 							var $userProf = $('<div class="profile">');
-                              var $picbod = $('<div class="profImg">')
-                              var $Profbod = $('<div class="profbod">');
+                                            var $picbod = $('<div class="profImg">')
+                                            var $Profbod = $('<div class="profbod">');
                 							var $Uname = $('<div class="userName">');
-                              var $Uid = $('<div class="userId">');
-                              var $Upic = $('<img src=""/>');
+                                            var $Uid = $('<div class="userId">');
+                                            var $Upic = $('<img src=""/>');
                 							$Uname.text(userProf.display_name);
                 							$Uid.text(userProf.employee_Id);
-                              $Upic.attr("src",userProf.thumbnail);
+                              $Upic.attr("src", userProf.thumbnail);
                               $Profbod.append($Uname).append($Uid);
                               $picbod.append($Upic);
                 							$userProf.append($picbod).append($Profbod);

@@ -50,6 +50,9 @@ if (! empty($_SESSION['currentUser']))
     $employee_id = $userInfo['employee_Id'];
     $display_name = $userInfo['display_name'];
     $userThumb = $userInfo['thumbnail'];
+    if(!$userThumb){
+        $userThumb = "images/defaultAvatar.png";
+    }
     $secret = $userInfo['secret'];
 ?>
 
@@ -373,5 +376,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.8/");
+   header("Location: http://localhost:8888/ThoughtDrop-master1.1/");
 }

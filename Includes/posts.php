@@ -177,6 +177,9 @@ function assignImage($pdo, $id){
     $statement->execute([$id]);
     $result = $statement->fetch();
     $image = $result['thumbnail'];
+    if(!$image){
+        $image = "images/defaultAvatar.png";
+    }
     return $image;
 }
 
