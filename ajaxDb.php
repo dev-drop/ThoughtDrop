@@ -34,6 +34,31 @@ switch ($action)
 
         }
         break;
+        
+    case 'likeComment':
+        
+        // Required parameter of PostID
+        if(!isset($_GET['commentId']))
+            $json['error'] = "Comment Id is required";
+        else
+        {
+            
+            $json['status'] = 'Success';
+            $commentId = $_GET['commentId'];
+            $currentUser = $_SESSION['currentUser'];
+
+            $statement = $pdo->prepare('INSERT IGNORE INTO `commentLikes` (`comment_Id`, `employee_Id`) VALUES (?, ?)');
+            $statement->execute([$commentId, $currentUser]);
+            
+            
+            $statement2 = $pdo->prepare('SELECT * FROM `commentLikes` WHERE `comment_Id` = ?');
+            $statement2->execute([$commentId]);
+            $result = $statement2->fetchAll();
+            $count = count($result);
+            $json['commentLikes'] = $count;
+                    
+        }
+        break;
 
     case 'getComments':
 
@@ -59,6 +84,26 @@ switch ($action)
 
         }
         break;
+        
+    case 'seeUser':
+        
+        // Required parameter of PostID
+        if(!isset($_GET['empId']))
+            $json['error'] = "Employee Id is required";
+        else
+        {
+            
+            $json['status'] = 'Success';
+            $empId = $_GET['empId'];
+            
+            $statement = $pdo->prepare('SELECT * FROM `employee` WHERE `employee_Id` = ?');
+            $statement->execute([$empId]);
+            $result = $statement->fetch();
+            $json['userInfo'] = $result;
+                    
+        }
+        break;
+        
     default:
         $json['error'] = 'Action "'.$action.'" does not exist';
         break;
