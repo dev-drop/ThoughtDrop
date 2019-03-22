@@ -32,7 +32,12 @@
                             {
                                 $('#selUserName').html(response.userInfo.display_name);
                                 $('#selUserId').html(response.userInfo.employee_Id);
-                                $('#selUserImg').attr("src", response.userInfo.thumbnail);
+                                console.log(response.userInfo.thumbnail);
+                                if(!response.userInfo.thumbnail == ""){
+                                    $('#selUserImg').attr("src", response.userInfo.thumbnail);
+                                }else{
+                                    $('#selUserImg').attr("src", "images/defaultAvatar.png");
+                                }
                                 console.log("success");
                                 console.log(response);
                             }else
@@ -88,12 +93,12 @@
                         {
                             if(response.status === "Success")
                             {
-                                //$postLikes.html(" " + response.likes);
+                                
                                 console.log("success");
                                 console.log(response);
                                 for(var i = 0; i<response.comments.length; i++){
                                  
-                                commentHtml += `<div class="commentWrapper"><div class='cardheader-comment'><div id='cardheader row'><h5 class='card-title'>${response.comments[i].author_Id}</h5><p id='timestamp'>${response.comments[i].timestamp}</p></div></div><div class='.card-body-comment'><p class='card-text'>${response.comments[i].body}</p><div><button class='icon likePost'><i class='fas fa-thumbs-up thumb likeCount'> ${response.comments[i].likes}</i></button></div>`           
+                                commentHtml += `<div class="commentWrapper"><div class='cardheader-comment'><div id='cardheader row'><h5 class='card-title'>${response.comments[i].author_Id}</h5><p id='timestamp'>${response.comments[i].timestamp}</p></div></div><div class='.card-body-comment'><p class='card-text'>${response.comments[i].body}</p>`           
                                 }
                                 $('.comments-body', $this).html(commentHtml);
                                 

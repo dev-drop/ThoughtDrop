@@ -30,7 +30,6 @@ if (! empty($_SESSION['currentUser']))
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
     <script src="scripts/ajax.js"></script>
-    //set the admin role session so I can access it in app.js
     <script>var mySession ='<?php echo $_SESSION['userRole'];?>';</script>
     <script type="text/javascript" src="scripts/app.js"></script>
 
@@ -75,6 +74,33 @@ if (! empty($_SESSION['currentUser']))
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-info btn-lg" name="edit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--- PROFILE EDIT MODAL -------------------------------------------------------------->
+    <div class="modal fade" id="editProfileModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="profile-img">
+                        <img id="editUserImg" src="" alt="ProfileImg">
+                      </div>
+                <!-- EDIT FORM -->
+                <form action="" method="post">
+                    <div class="modal-body">
+                       <label class="text-center" for="userId">User Id:</label>
+                        <input type="text" id="proId" name="userId" values="" readonly>
+                        <label class="text-center" for="userName">User Name:</label>
+                        <input type="text" id="proName" name="userName" value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info btn-lg" name="editProfile">Update</button>
                     </div>
                 </form>
             </div>
@@ -248,13 +274,16 @@ if (! empty($_SESSION['currentUser']))
     <div class="profile-body">
       <div class="profile-img">
         <img src="<?php echo $userThumb ?>" alt="ProfileImg">
-        <div id="overlay"><button type="button" class="editModal" data-toggle="modal" data-target="#uploadModal" ><i class="fas fa-camera-retro"></i>
-
-        </button>
+        <div id="overlay">
+            <button type="button" class="editModal" data-toggle="modal" data-target="#uploadModal" ><i class="fas fa-camera-retro"></i>
+            </button>
         </div>
       </div>
-        <h2 style="font-weight: bolder;"><?php echo $display_name ?></h2>
-        <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3><br>
+       <div class="proEditModal" data-toggle="modal" data-target="#editProfileModal" data-id="<?php echo $employee_id ?>" data-name="<?php echo $display_name ?>" data-img="<?php echo $userThumb ?>">
+            <h2 style="font-weight: bolder;"><?php echo $display_name ?></h2>
+            <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3>
+        </div>
+        <br>
         <h6><i class="fas fa-thumbs-up thumb"></i>Likes:</h6><br>
         <h6><i class="fas fa-comment writecomment"></i>Comments:</h6><br>
         <?php
@@ -399,5 +428,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop-master1.2/");
+   header("Location: http://localhost:8888/ThoughtDrop-master1.3/");
 }
