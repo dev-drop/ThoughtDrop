@@ -98,7 +98,8 @@ if(isset($_POST['postContent']))
             $statement = $pdo->prepare('INSERT INTO `posts` (`author_Id`, `timestamp`, `body`) VALUES (?, ?, ?)');
             $statement->execute([$authorId, $timeStamp, $cusfree]);
         }else{
-
+            $message = "The post body cannot be left empty";
+            echo "<script type='text/javascript'>alert('$message');</script>";
             return;
         }
     }
@@ -107,13 +108,12 @@ if(isset($_POST['postContent']))
 //**** DELETE POST ****
 if(isset($_POST['delete']))
 {
-
-    //TODO : CONFIRM DELETION OF THE POST
-
     //DEFINE THE POST TO BE SEARCHED FOR AND DELETED
     $postId = $_POST['postId'];
     $statement = $pdo->prepare('DELETE FROM `posts` WHERE `Id` = ?');
     $statement->execute([$postId]);
+    $message = "Your Post has been Deleted successfully.";
+    echo "<script type='text/javascript'>alert('$message');</script>";
 }
 
 //**** EDIT POST ****
@@ -130,13 +130,14 @@ if(isset($_POST['edit']))
             $statement = $pdo->prepare('UPDATE `posts` SET `body` = ? WHERE `Id` = ? AND `author_Id` = ?');
             $statement->execute([$cusfree, $postId, $authorId]);
         }else{
+
             return;
         }
 
     }else{
-        $message = "The post body cannot be left empty";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-      }
+      $message = "The post body cannot be left empty";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+    }
 }
 
 //**** ASSIGN POST COLOR *****
@@ -178,7 +179,7 @@ function assignImage($pdo, $id){
     $result = $statement->fetch();
     $image = $result['thumbnail'];
     if(!$image){
-        $image = "images/defaultAvatar.png";
+    $image = "images/defaultAvatar.png";
     }
     return $image;
 }

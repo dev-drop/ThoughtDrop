@@ -2,10 +2,10 @@
 require "db.php";
 
 if($_SESSION['currentUser']){
-    
+
 $user = $_SESSION['currentUser'];
 
-    
+
 // Check if image file is a actual image or fake image
 if(isset($_POST["submitImage"])) {
     $target_dir = "uploads/".$user;
@@ -13,11 +13,11 @@ if(isset($_POST["submitImage"])) {
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    
+
     if($check !== false) {
         $message = "File is an image - " . $check["mime"] . ".";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-        
+        //echo "<script type='text/javascript'>alert('$message');</script>";
+
         $uploadOk = 1;
     } else {
         $message = "File is not an image.";
@@ -27,7 +27,7 @@ if(isset($_POST["submitImage"])) {
     // Check if file already exists
 if (file_exists($target_file)) {
     $message = "Sorry, file already exists.";
-    echo "<script type='text/javascript'>alert('$message');</script>";
+    //echo "<script type='text/javascript'>alert('$message');</script>";
     $uploadOk = 0;
 }
 
@@ -53,15 +53,15 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        
+
         // INSERT IMAGE FILE
             $image = $target_file;
             $statement = $pdo->prepare('UPDATE `employee` SET `thumbnail` = ? WHERE `employee_Id` = ?');
             $statement->execute([$image, $_SESSION['currentUser']]);
-        
-        
+
+
         $message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-        echo "<script type='text/javascript'>alert('$message');</script>";
+        //echo "<script type='text/javascript'>alert('$message');</script>";
     } else {
         $message = "Sorry, there was an error uploading your file.";
         echo "<script type='text/javascript'>alert('$message');</script>";

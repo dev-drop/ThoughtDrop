@@ -7,7 +7,6 @@ require 'Includes/upload.php';
 if (! empty($_SESSION['currentUser']))
 {
 ?>
-
 <html lang="en">
 <head>
   <!--Meta for Open Graph-->
@@ -31,6 +30,8 @@ if (! empty($_SESSION['currentUser']))
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
     <script src="scripts/ajax.js"></script>
+    //set the admin role session so I can access it in app.js
+    <script>var mySession ='<?php echo $_SESSION['userRole'];?>';</script>
     <script type="text/javascript" src="scripts/app.js"></script>
 
 
@@ -51,7 +52,7 @@ if (! empty($_SESSION['currentUser']))
     $display_name = $userInfo['display_name'];
     $userThumb = $userInfo['thumbnail'];
     if(!$userThumb){
-        $userThumb = "images/defaultAvatar.png";
+    $userThumb = "images/defaultAvatar.png";
     }
     $secret = $userInfo['secret'];
 ?>
@@ -162,9 +163,13 @@ if (! empty($_SESSION['currentUser']))
             <h4 class="modal-title">View User Profile</h4>
           </div>
           <div class="modal-body Pbody">
-            <div class="profileBody">
+             <div class="profileBody">
+               <?php
+//-------------- VALIDATE USER FOR ADMIN PERMISSIONS ------------------->
+                if(($_SESSION['userRole'] == 127)){
 
-            </div>
+                } ?>
+             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -315,16 +320,14 @@ if (! empty($_SESSION['currentUser']))
                   <button class="icon likePost"><i class="fas fa-thumbs-up thumb likeCount"> <?php echo getLikes($pdo, $row['Id'] ); ?></i></button>
                   <button class="icon commentPost"><i class="fas fa-comment writecomment"> <?php echo getCommentCount($pdo, $row['Id'] ); ?></i></button>
 
-
               <?php
-
 //-------------- VALIDATE USER FOR ADMIN PERMISSIONS -------------------
                 $adminOptions = validate_permissions($_SESSION['currentUser'], $row['author_Id']);
                 if($adminOptions || ($_SESSION['userRole'] == 127)){
                 ?>
               <div class="adminOpt">
 
-<!-------------- OPEN EDIT MODAL WINDOW -------------------------------->
+<!--            OPEN EDIT MODAL WINDOW -------------------------------->
                   <button type="button" class="editModal icon" data-toggle="modal" data-target="#myModal" data-id="<?php echo $row['Id'];?>" data-author="<?php echo $row['author_Id']; ?>" data-val="<?php echo $row['body']; ?>" ><i class="fas fa-edit"></i></button>
 
                   <!-- DELETE POST FORM -->
@@ -333,10 +336,9 @@ if (! empty($_SESSION['currentUser']))
                         <button class="icon"  type="submit" name="delete"><i class="fas fa-trash"></i></button>
                   </form>
               </div>
-
-<!-- COMMENTS & COMMENT FORM ----------------------------->
               <?php } ?>
               </div>
+<!--                COMMENTS & COMMENT FORM ----------------------------->
         </div>
               <div class="card-comment ">
                  <div class="comments-body "></div>
@@ -376,5 +378,5 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop-master1.1/");
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.8/");
 }

@@ -19,18 +19,20 @@ switch ($action)
     {
       $search = htmlspecialchars($_POST['searchInput'], ENT_COMPAT | ENT_XHTML, 'UTF-8');
       $json['search_string'] = $search;
-      //get users from DB here
       $json['status'] = 'success';
       $json['users'] = [];
-      $statement = $pdo->prepare('SELECT * FROM `employee`  WHERE `employee_Id` LIKE ? OR `display_name` LIKE ?');
-      if($statement->execute(array('%'.$search.'%','%'.$search.'%' )))
-       	{
-       	$json['users'] = $statement->fetchAll();
-      }else
-       	{
-       	$json['status'] = 'failed';
-       	$json['error'] = 'Database error';
-       	}
+
+      if(!$search == ""){
+        $statement = $pdo->prepare('SELECT * FROM `employee`  WHERE `employee_Id` LIKE ? OR `display_name` LIKE ?');
+        if($statement->execute(array('%'.$search.'%','%'.$search.'%' )))
+         	{
+         	$json['users'] = $statement->fetchAll();
+        }else
+         	{
+         	$json['status'] = 'failed';
+         	$json['error'] = 'Database error';
+        }
+      }
     }
     break;
 

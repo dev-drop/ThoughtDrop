@@ -6,8 +6,6 @@ $(function() {
     $("#registerlink").delay(100).fadeIn(200);
     $("#loginlink").fadeOut(100);
 
-	//	$('#registerlink').removeClass('active');
-	//	$(this).addClass('active');
 		e.preventDefault();
 	});
 	$('#registerlink').click(function(e) {
@@ -16,15 +14,9 @@ $(function() {
     $("#loginlink").delay(100).fadeIn(200);
     $("#registerlink").fadeOut(100);
 
-		//$('#loginlink').removeClass('active');
-		//$(this).addClass('active');
 		e.preventDefault();
 	});
 
-  /*$('.searchbtn').click(function(e) {
-    $("#searchbar").delay(100).fadeIn(200);
-
-  });*/
 
   $(".thumb").click(function(){
     $(this).toggleClass('like');
@@ -73,9 +65,10 @@ $(function() {
 
     });
 
+
 });
 
-
+//So that the text field on the home page will autogrow as text is added
 function auto_grow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight)+"px";
@@ -92,8 +85,7 @@ $(document).on("click", ".editModal", function () {
     $(".modal-body #authorId").val( editAuthor );
 });
 
-//** To open a Modal on after a "type= submit" form is sent.***
-
+//** To open a Modal on after a "type= submit" form is sent.**
 $('#searchform').on('submit', function(e){
   $('#searchProfile').modal('show');
   e.preventDefault();

@@ -43,16 +43,9 @@
         <input type="submit" name="login" value="Log In">
       </form>
 
-<!--TODO make it so that the page does not re-submit after submission of an invalid registration form,
-otherwise the error will show up on the login form, and not on the registration form, as intended.
-Other solution would be to create another page for the registration instead of toggling between the two.-->
 
       <!-- Registration Form -->
       <form class="registrationform" action="" method="POST">
-        <?php
-        if(isset($_POST["employee_Id"]))
-         echo '<div class="error">Sorry, There is already a user by that Name</div>';
-        ?>
         <input type="text" name="employee_Id" placeholder="Enter Your Employee ID" maxlength="6">
         <input type="text" name="display_name" placeholder="Enter Your User Name">
         <input type="text" name="password" placeholder="Enter Your Password">

@@ -254,6 +254,9 @@ input[type=text]:placeholder input[type=password]:placeholder{
     padding: 20px;
 }
 
+.deleteUser{
+  float:right;
+}
 
 /*-------------------------------------------------------NEWS FEED-----------------------------------------------------*/
 
@@ -311,6 +314,10 @@ input[type=text]:placeholder input[type=password]:placeholder{
 
 .fas{
   color: #a2d5f7;
+}
+
+.fa-user-slash{
+  color: #e50000;
 }
 
 .like{

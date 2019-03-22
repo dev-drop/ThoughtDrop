@@ -5,8 +5,6 @@ require "db.php";
 //************************************************************
 
 function getLikes($pdo, $postId){
-   
-    
    // Get Like Count
     $statement = $pdo->prepare('SELECT * FROM `likes` WHERE `post_Id` = ?');
     $statement->execute([$postId]);
@@ -16,7 +14,7 @@ function getLikes($pdo, $postId){
     $count = count($result);
     //$count = $result.count();
     return $count;
-    
+
 }
 
 
