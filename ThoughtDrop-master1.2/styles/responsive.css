@@ -1,0 +1,76 @@
+@media all and (max-width: 1690px) {
+
+}
+
+@media all and (max-width: 1300px) {
+  .col-md-2, .col-md-8 {
+      padding: 0;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  button.google-btn {
+      padding: 5px 8px;
+  }
+
+  .navbar{
+    height: 6em;
+    padding: 1em 2em;
+  }
+
+  .bgimage{
+    margin-top:110px;
+  }
+}
+
+
+
+@media all and (max-width: 850px) {
+  .profile-container.col-md-2 {
+      margin: 0 auto;
+      display: flex;
+  }
+
+}
+
+@media all and (max-width: 763px) {
+  .newsfeed{
+    padding-bottom: 70px;
+  }
+
+  .tab{
+    width: 25%;
+  }
+  .nav-tabs{
+    margin-top:50px;
+  }
+
+  .col-md-8 {
+      padding: 20px;
+  }
+
+}
+
+
+@media all and (max-width: 500px) {
+  .dev-footer{
+    padding:10px 0 0 0;
+  }
+  #timestamp {
+      text-align: left;
+      font-size: .6em;
+      float: initial;
+      margin-left: 58px;
+      margin-top: -30px;
+  }
+
+  .loginpage{
+    margin-top:100px;
+  }
+
+ }
