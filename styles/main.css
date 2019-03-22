@@ -474,6 +474,14 @@ h5.card-title:hover {
     color: #b0ddf9;
 }
 
+.proEditModal{
+  cursor: pointer;
+}
+
+.proEditModal:hover{
+  color: #b0ddf9;
+}
+
 #all-tab{
   background-color: #f5f5f5;
   opacity: .75;
