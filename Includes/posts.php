@@ -184,6 +184,32 @@ function assignImage($pdo, $id){
     return $image;
 }
 
+//**** UPDATE USER DISPLAYNAME  ****
+
+if(isset($_POST['editProfile']))
+{
+    $userId = $_POST['userId'];
+    $userName = $_POST['userName'];
+    $newName = htmlspecialchars($_POST['userName'],ENT_COMPAT | ENT_XHTML,'utf-8');;
+    $cusfreeName = wordFilter($newName);
+
+    if($cusfreeName){
+
+        if($currentUser == $userId){
+            $statement = $pdo->prepare('UPDATE `employee` SET `display_name` = ? WHERE `employee_Id` = ?');
+            $statement->execute([$cusfreeName, $userId]);
+        }else{
+            $message = "Your ID doesn't match the updated Updated users Id";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+            return;
+        }
+
+    }else{
+      $message = "The post body cannot be left empty";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+}
+
 //**** CHECK USER FOR POST MATCHES. ENABLE EDITING PERMISSIONS ****
 function validate_permissions($currentUser, $Author)
 {

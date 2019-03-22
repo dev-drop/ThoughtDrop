@@ -32,7 +32,12 @@
                             {
                                 $('#selUserName').html(response.userInfo.display_name);
                                 $('#selUserId').html(response.userInfo.employee_Id);
-                                $('#selUserImg').attr("src", response.userInfo.thumbnail);
+                                console.log(response.userInfo.thumbnail);
+                                if(!response.userInfo.thumbnail == ""){
+                                    $('#selUserImg').attr("src", response.userInfo.thumbnail);
+                                }else{
+                                    $('#selUserImg').attr("src", "images/defaultAvatar.png");
+                                }
                                 console.log("success");
                                 console.log(response);
                             }else
@@ -88,7 +93,7 @@
                         {
                             if(response.status === "Success")
                             {
-                                //$postLikes.html(" " + response.likes);
+                                
                                 console.log("success");
                                 console.log(response);
                                 for(var i = 0; i<response.comments.length; i++){

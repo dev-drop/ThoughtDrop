@@ -74,7 +74,7 @@ function auto_grow(element) {
     element.style.height = (element.scrollHeight)+"px";
 }
 
-//*** PASS EDIT VALUES TO MODEL ***
+//*** PASS EDIT VALUES TO MODAL ***
 $(document).on("click", ".editModal", function () {
     var editId = $(this).data('id');
     var editBody = $(this).data('val');
@@ -83,6 +83,17 @@ $(document).on("click", ".editModal", function () {
     $(".modal-body #editId").val( editId );
     $(".modal-body #editBody").val( editBody );
     $(".modal-body #authorId").val( editAuthor );
+});
+
+//*** PASS PROFILE EDIT VALUES TO MODAL ***
+$(document).on("click", ".proEditModal", function () {
+    var editId = $(this).data('id');
+    var editAuthor = $(this).data('name');
+    var img = $(this).data('img');
+                    
+    $("#editUserImg").attr("src", img);
+    $(".modal-body #proId").val( editId );
+    $(".modal-body #proName").val( editAuthor );
 });
 
 //** To open a Modal on after a "type= submit" form is sent.**
