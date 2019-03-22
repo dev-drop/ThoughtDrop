@@ -19,6 +19,7 @@ if(isset($_POST['register'])){
 
     $validIdFormat = preg_match('/^[a-zA-Z]{1}[0-9]{5}$/', $employee_Id, $output_array);
     if($validIdFormat == 1){
+        
         //HASH PASSWORD
         $options = ['cost' =>12];
         $hashedPass = password_hash($password, PASSWORD_BCRYPT, $options);
@@ -33,12 +34,10 @@ if(isset($_POST['register'])){
             $_SESSION['userRole'] = 10;
             $_SESSION['GoogleAuth'] = false;
             
-            header("Location: http://localhost:8888/ThoughtDrop-master1.4/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop-master1.6/home.php");
             //exit();
         }
     }else{
-        // $message =  "Sorry, Id is incorrect Format";
-        // echo "<script type='text/javascript'>alert('$message');</script>";
         return;
     }
 }
@@ -79,17 +78,31 @@ if(isset($_POST['login'])){
             if ($checkResult) {
 
                 $_SESSION['GoogleAuth'] = true;
-                //STORE USERS PASSWORD
+                
+                // STORE USERS PASSWORD
                 $HashPass = $result['password'];
 
-                //VERIFY INPUT PASSWORD AND SAVED HASHED-PASSWORD MATCH
+                // VERIFY INPUT PASSWORD AND SAVED HASHED-PASSWORD MATCH
                 $passVerified = password_verify($password, $HashPass);
                 if($passVerified){
-                    //TO:DO SOMETHING HERE WHEN VERIFIED
+                    
+                    // TO:DO SOMETHING HERE WHEN VERIFIED
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
+                    
+                    // REHASH
+                    $options = ['cost'=>12];
+                    $isOld = password_needs_rehash($password, PASSWORD_BCRYPT, $options);
+                    if($isOld){
+
+                        // Update the Hash Cost if the Value is Old
+                        $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+                        $statementNewPass = $pdo->prepare('UPDATE `employee` SET `password` = ? WHERE `employee_Id` = ? ');
+                        $statementNewPass->execute([$hash, $_SESSION['currentUser']]);
+
+                    }
                   
-                    header("Location: http://localhost:8888/ThoughtDrop-master1.4/home.php");
+                    header("Location: http://localhost:8888/ThoughtDrop-master1.6/home.php");
 
                     exit();
                 }else{
@@ -98,18 +111,31 @@ if(isset($_POST['login'])){
                 }
             }
         }else{
-            //STORE USERS PASSWORD
+            // STORE USERS PASSWORD
                 $HashPass = $result['password'];
                 $_SESSION['GoogleAuth'] = false;
-                //VERIFY INPUT PASSWORD AND SAVED HASHED-PASSWORD MATCH
+            
+                // VERIFY INPUT PASSWORD AND SAVED HASHED-PASSWORD MATCH
                 $passVerified = password_verify($password, $HashPass);
                 if($passVerified){
-                    //TO:DO SOMETHING HERE WHEN VERIFIED
+                    
+                    // TO:DO SOMETHING HERE WHEN VERIFIED
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
+                    
+                    // REHASH
+                    $options = ['cost'=>12];
+                    $isOld = password_needs_rehash($password, PASSWORD_BCRYPT, $options);
+                    if($isOld){
 
+                        // Update the Hash Cost if the Value is Old
+                        $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+                        $statementNewPass = $pdo->prepare('UPDATE `employee` SET `password` = ? WHERE `employee_Id` = ? ');
+                        $statementNewPass->execute([$hash, $_SESSION['currentUser']]);
+
+                    }
             
-                    header("Location: http://localhost:8888/ThoughtDrop-master1.4/home.php");
+                    header("Location: http://localhost:8888/ThoughtDrop-master1.6/home.php");
 
                     exit();
                 }
@@ -136,9 +162,7 @@ if(isset($_POST['logout'])){
     Unset($_SESSION['currentUser']);
     Unset($_SESSION['GoogleAuth']);
 
-    
-
-    header("Location: http://localhost:8888/ThoughtDrop-master1.4/");
+    header("Location: http://localhost:8888/ThoughtDrop-master1.6/");
 
     exit();
 }

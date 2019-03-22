@@ -144,6 +144,7 @@ if (! empty($_SESSION['currentUser']))
                     <h3 style="font-weight: 100;" id="selUserId">USER ID</h3><br>
                     <h6><i class="fas fa-thumbs-up" id="selUserLikes"></i></h6><br>
                     <h6><i class="fas fa-comment" id="selUserComments"></i></h6><br>
+                    <div id="adminPermis"></div>
                 </div>
             </div>
         </div>
@@ -432,6 +433,6 @@ if (! empty($_SESSION['currentUser']))
 
   
 
-   header("Location: http://localhost:8888/ThoughtDrop-master1.4/");
+   header("Location: http://localhost:8888/ThoughtDrop-master1.6/");
 
 }

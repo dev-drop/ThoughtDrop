@@ -19,7 +19,8 @@
             var $comment_button = $('button.commentPost', $this);
 
             var $userName = $('.seeUser', $this);
-
+            var $profile_field = $('div.profileBody',$this);
+            
             $userName.on('click', function()
                 {
 
@@ -51,9 +52,9 @@
                                 if(mySession == 127){
                                   $adminCrl = $('<form action="" class="deleteUser" method="post">');
                                   $adminCrl.append('<input type="hidden" name="employeeId" id="hiddenValue" value="' + response.userInfo.employee_Id + '">');
-                                  $adminCrl.append('<button class="icon"  type="submit" name="deleteUser"><i class="fas fa-user-slash"></i></button>');
+                                  $adminCrl.append('Delete User:<button class="icon"  type="submit" name="deleteUser" ><i class="fas fa-user-slash"></i></button>');
                                 }
-                                $('#adminPermis').append($adminCrl);
+                                $('#adminPermis').html($adminCrl);
                                 if ($adminCrl)
                                   {
                                   var $admin_form = $('.deleteUser','#adminPermis');

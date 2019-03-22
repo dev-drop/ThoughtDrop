@@ -16,7 +16,9 @@ h1, h2, h3, h4, h5, h6{
     padding-top: 1.5em;
 }
 
-
+.google-btn:hover{
+    cursor: pointer!important;
+}
 
 .bg-light{
   background-color: #a2d5f7!important;
