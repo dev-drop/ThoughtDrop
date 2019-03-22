@@ -13,7 +13,7 @@ session_start();
 if(isset($_POST['register'])){
 
     //FORM INPUT FIELDS
-    $employee_Id = $_POST['employee_Id'];
+    $employee_Id = ucfirst($_POST['employee_Id']);
     $display_name = $_POST['display_name'];
     $password = $_POST['password'];
 
