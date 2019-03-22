@@ -33,7 +33,7 @@ if(isset($_POST['register'])){
             $_SESSION['userRole'] = 10;
             $_SESSION['GoogleAuth'] = false;
             
-            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/home.php");
+            header("Location: http://localhost:8888/ThoughtDrop-master1.4/home.php");
             //exit();
         }
     }else{
@@ -89,7 +89,7 @@ if(isset($_POST['login'])){
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
                   
-                    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/home.php");
+                    header("Location: http://localhost:8888/ThoughtDrop-master1.4/home.php");
 
                     exit();
                 }else{
@@ -109,11 +109,10 @@ if(isset($_POST['login'])){
                     $_SESSION['userRole'] = $result['role'];
 
             
-                    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/home.php");
+                    header("Location: http://localhost:8888/ThoughtDrop-master1.4/home.php");
 
                     exit();
                 }
-
         }
     }
 }
@@ -139,7 +138,7 @@ if(isset($_POST['logout'])){
 
     
 
-    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/");
+    header("Location: http://localhost:8888/ThoughtDrop-master1.4/");
 
     exit();
 }

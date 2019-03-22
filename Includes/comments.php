@@ -35,5 +35,18 @@ function getCommentCount($pdo, $postId){
     return $count;
 }
 
+function userComments($pdo, $employeeId){
+    
+    // Get Like Count
+    $statement = $pdo->prepare('SELECT * FROM `comments` WHERE `author_Id` = ?');
+    $statement->execute([$employeeId]);
+    $result = $statement->fetchAll();
+
+    //var_dump($result);
+    $count = count($result);
+    //$count = $result.count();
+    return $count;   
+}
+
 
 ?>

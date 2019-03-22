@@ -17,6 +17,19 @@ function getLikes($pdo, $postId){
 
 }
 
+function userLikes($pdo, $employeeId){
+    
+    // Get Like Count
+    $statement = $pdo->prepare('SELECT * FROM `likes` WHERE `employee_Id` = ?');
+    $statement->execute([$employeeId]);
+    $result = $statement->fetchAll();
+
+    //var_dump($result);
+    $count = count($result);
+    //$count = $result.count();
+    return $count;   
+}
+
 
 
 
