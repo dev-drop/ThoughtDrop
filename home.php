@@ -21,6 +21,8 @@ if (! empty($_SESSION['currentUser']))
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" type="image/png" href="images/TDFav.png"/>
     <title>ThoughtDrop</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -140,8 +142,8 @@ if (! empty($_SESSION['currentUser']))
                   </div>
                     <h2 style="font-weight: bolder;" id="selUserName">USER NAME</h2>
                     <h3 style="font-weight: 100;" id="selUserId">USER ID</h3><br>
-                    <h6><i class="fas fa-thumbs-up thumb"></i>Likes:</h6><br>
-                    <h6><i class="fas fa-comment writecomment"></i>Comments:</h6><br>
+                    <h6><i class="fas fa-thumbs-up"></i>Likes:</h6><br>
+                    <h6><i class="fas fa-comment"></i>Comments:</h6><br>
                 </div>
             </div>
         </div>
@@ -279,13 +281,15 @@ if (! empty($_SESSION['currentUser']))
             </button>
         </div>
       </div>
+
        <div class="proEditModal" data-toggle="modal" data-target="#editProfileModal" data-id="<?php echo $employee_id ?>" data-name="<?php echo $display_name ?>" data-img="<?php echo $userThumb ?>">
             <h2 style="font-weight: bolder;"><?php echo $display_name ?></h2>
             <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3>
         </div>
         <br>
-        <h6><i class="fas fa-thumbs-up thumb"></i>Likes:</h6><br>
-        <h6><i class="fas fa-comment writecomment"></i>Comments:</h6><br>
+        <h6><i class="fas fa-thumbs-up "></i>Likes:</h6><br>
+        <h6><i class="fas fa-comment "></i>Comments:</h6><br>
+    
         <?php
             if(!$_SESSION['GoogleAuth'])
             {
@@ -416,7 +420,7 @@ if (! empty($_SESSION['currentUser']))
   <div class="container-fluid">
     <div class="row">
       <div class="dev-footer">
-      <h2>ThoughtDrop Developed with Love by Cameron & Jessica</h2>
+      <p>ThoughtDrop Developed with Love by Cameron & Jessica</p>
       </div>
     </div>
 </div>
@@ -428,5 +432,9 @@ if (! empty($_SESSION['currentUser']))
 </html>
 <?php
 }else{
-   header("Location: http://localhost:8888/ThoughtDrop-master1.3/");
+
+  
+
+   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/");
+
 }

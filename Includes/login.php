@@ -32,7 +32,8 @@ if(isset($_POST['register'])){
             $_SESSION['currentUser'] = $employee_Id;
             $_SESSION['userRole'] = 10;
             $_SESSION['GoogleAuth'] = false;
-            header("Location: http://localhost:8888/ThoughtDrop-master1.3/home.php");
+            
+            header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/home.php");
             //exit();
         }
     }else{
@@ -87,7 +88,9 @@ if(isset($_POST['login'])){
                     //TO:DO SOMETHING HERE WHEN VERIFIED
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
-                    header("Location: http://localhost:8888/ThoughtDrop-master1.3/home.php");
+                  
+                    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/home.php");
+
                     exit();
                 }else{
                   $message = "Password Invalid";
@@ -104,7 +107,10 @@ if(isset($_POST['login'])){
                     //TO:DO SOMETHING HERE WHEN VERIFIED
                     $_SESSION['currentUser'] = $result['employee_Id'];
                     $_SESSION['userRole'] = $result['role'];
-                    header("Location: http://localhost:8888/ThoughtDrop-master1.3/home.php");
+
+            
+                    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/home.php");
+
                     exit();
                 }
 
@@ -130,7 +136,11 @@ if(isset($_POST['logout'])){
     //TODO : LOGOUT FUNCTION
     Unset($_SESSION['currentUser']);
     Unset($_SESSION['GoogleAuth']);
-    header("Location: http://localhost:8888/ThoughtDrop-master1.3/");
+
+    
+
+    header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/");
+
     exit();
 }
 
