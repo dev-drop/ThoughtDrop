@@ -142,8 +142,8 @@ if (! empty($_SESSION['currentUser']))
                   </div>
                     <h2 style="font-weight: bolder;" id="selUserName">USER NAME</h2>
                     <h3 style="font-weight: 100;" id="selUserId">USER ID</h3><br>
-                    <h6><i class="fas fa-thumbs-up"></i>Likes:</h6><br>
-                    <h6><i class="fas fa-comment"></i>Comments:</h6><br>
+                    <h6><i class="fas fa-thumbs-up" id="selUserLikes"></i></h6><br>
+                    <h6><i class="fas fa-comment" id="selUserComments"></i></h6><br>
                 </div>
             </div>
         </div>
@@ -287,8 +287,8 @@ if (! empty($_SESSION['currentUser']))
             <h3 style="font-weight: 100;"><?php echo $employee_id ?></h3>
         </div>
         <br>
-        <h6><i class="fas fa-thumbs-up "></i>Likes:</h6><br>
-        <h6><i class="fas fa-comment "></i>Comments:</h6><br>
+        <h6><i class="fas fa-thumbs-up "></i>Likes: <?php echo userLikes($pdo, $employee_id); ?></h6><br>
+        <h6><i class="fas fa-comment "></i>Comments: <?php echo userComments($pdo, $employee_id); ?></h6><br>
     
         <?php
             if(!$_SESSION['GoogleAuth'])
@@ -435,6 +435,6 @@ if (! empty($_SESSION['currentUser']))
 
   
 
-   header("Location: http://localhost:8888/Semester5/ThoughtDrop%20Commits/ThoughtDropV1.9/");
+   header("Location: http://localhost:8888/ThoughtDrop-master1.4/");
 
 }

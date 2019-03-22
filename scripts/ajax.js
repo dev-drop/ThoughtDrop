@@ -32,6 +32,11 @@
                             {
                                 $('#selUserName').html(response.userInfo.display_name);
                                 $('#selUserId').html(response.userInfo.employee_Id);
+                                $('#selUserLikes').html("Likes: " + response.likeCount);
+                                $('#selUserComments').html("Comments: " +response.commentCount);
+                                console.log(response.commentCount);
+                                console.log(response.likeCount);
+
                                 console.log(response.userInfo.thumbnail);
                                 if(!response.userInfo.thumbnail == ""){
                                     $('#selUserImg').attr("src", response.userInfo.thumbnail);
